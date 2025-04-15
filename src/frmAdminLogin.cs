@@ -29,7 +29,14 @@ namespace WUMedCoProject
          **********************************************************************/
         private void chkbxShowHidePW_CheckedChanged(object sender, EventArgs e)
         {
-            //TODO Add functinality to show/hide password
+            if (chkbxShowHidePW.Checked)
+            {
+                txtPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                txtPassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }
