@@ -58,6 +58,7 @@
             lblNewAdmin.TabIndex = 1;
             lblNewAdmin.TabStop = true;
             lblNewAdmin.Text = "New Admin?";
+            lblNewAdmin.LinkClicked += lblNewAdmin_LinkClicked;
             // 
             // btnLogin
             // 
@@ -70,6 +71,7 @@
             btnLogin.TabIndex = 2;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += btnLogin_Click;
             // 
             // txtUsername
             // 
@@ -85,10 +87,10 @@
             txtPassword.Font = new Font("Verdana", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPassword.Location = new Point(271, 160);
             txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '*';
             txtPassword.PlaceholderText = "password";
             txtPassword.Size = new Size(197, 31);
             txtPassword.TabIndex = 4;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -111,6 +113,7 @@
             chkbxShowHidePW.TabIndex = 6;
             chkbxShowHidePW.Text = "Show/Hide Password";
             chkbxShowHidePW.UseVisualStyleBackColor = true;
+            chkbxShowHidePW.CheckedChanged += chkbxShowHidePW_CheckedChanged;
             // 
             // frmAdminLogin
             // 
@@ -129,7 +132,6 @@
             Name = "frmAdminLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Administrator Login";
-            Load += this.frmAdminLogin_Load;
             ((System.ComponentModel.ISupportInitialize)ichabodBackground).EndInit();
             ResumeLayout(false);
             PerformLayout();
