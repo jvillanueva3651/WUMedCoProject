@@ -1,8 +1,8 @@
 namespace WUMedCoProject
 {
-    public partial class Form1 : Form
+    public partial class frmAdminLogin : Form
     {
-        public Form1()
+        public frmAdminLogin()
         {
             InitializeComponent();
         }
