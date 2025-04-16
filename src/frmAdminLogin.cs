@@ -55,6 +55,20 @@ namespace WUMedCoProject
                     bool isValid = ValidateAdmin(username, password);
                     if (isValid)
                     {
+                        // Update the last login time in the database
+                        using (SqlConnection connection = new SqlConnection(WUMedCoPath._connectionString))
+                        {
+                            string query = "UPDATE AdminLogin SET LastLogin = @LastLogin WHERE Username = @Username";
+                            using (SqlCommand cmd = new SqlCommand(query, connection))
+                            {
+                                cmd.Parameters.AddWithValue("@LastLogin", DateTime.Now);
+                                cmd.Parameters.AddWithValue("@Username", username);
+
+                                connection.Open();
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
                         MessageBox.Show("Login successful!", "Success");
                         src.frmAdminHome adminHomeForm = new src.frmAdminHome();
                         adminHomeForm.Show();
