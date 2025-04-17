@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
@@ -15,23 +16,9 @@ namespace WUMedCoProject
 {
     public partial class frmNewAdmin : Form
     {
-        static SqlConnection conn = null!;
-        static SqlCommand cmd = null!;
-        static SqlDataReader reader = null!;
         public frmNewAdmin()
         {
             InitializeComponent();
-        }
-
-        /***********************************************************************
-         * Method to connect to database
-         **********************************************************************/
-        private void Database_Connection()
-        {
-            // Static connection string to connect to the database
-            string url = WUMedCoPath._connectionString;
-
-            conn = new SqlConnection(url);
         }
 
         /***********************************************************************
@@ -42,7 +29,7 @@ namespace WUMedCoProject
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            if(ValidateInput(username, password))
+            if (ValidateInput(username, password))
             {
                 SaveNewAdmin(username, password);
                 this.Close();
@@ -113,17 +100,18 @@ namespace WUMedCoProject
          **********************************************************************/
         private void SaveNewAdmin(string username, string password)
         {
-            // Hash the password
             using (SHA256 sha256 = SHA256.Create())
             {
                 byte[] inputBytes = Encoding.UTF8.GetBytes(password);
                 byte[] inputHashBytes = sha256.ComputeHash(inputBytes);
                 string hashedPassword = Convert.ToBase64String(inputHashBytes);
 
-                // Connect and insert into database
-                using (SqlConnection connection = new SqlConnection(WUMedCoPath._connectionString))
+                string connectionString = ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string query = @"INSERT INTO AdminLogin (Username, Password) VALUES (@Username, @Password)";
+                    string query = @"INSERT INTO AdminLogin (Username, Password) 
+                                     VALUES (@Username, @Password)";
 
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -139,10 +127,6 @@ namespace WUMedCoProject
                         catch (SqlException ex)
                         {
                             MessageBox.Show($"Database error: {ex.Message}", "Error");
-                        }
-                        finally
-                        {
-                            connection.Close();
                         }
                     }
                 }
