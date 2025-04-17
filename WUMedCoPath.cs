@@ -10,9 +10,7 @@ namespace WUMedCoProject
     {
         public static string _connectionString = @"
             Data Source=(LocalDB)\MSSQLLocalDB;
-            AttachDbFilename=C:\Users\jvill\Documents\Classes\2025SpringWu\DBMS\SemesterProject\WUMedCoProject\WUMedCo.mdf;
-            User Id=AdminUser;
-            Password=ClassProject123!;
+            AttachDbFilename=C:\Users\jvill\WUMedCo.mdf;
             Integrated Security=False;";
     }
 }
