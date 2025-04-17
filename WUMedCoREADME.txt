@@ -6,9 +6,8 @@ In order for the application to work properly with the database, you must modify
 
 Luckily I have centralized this in one location.
 
-Simply open the file "WUMedCoPath.cs" and change the connection string to your database path, including the database name and file type.
+Simply open the file "App.config.template" and change the connection string to your database path, including the database name and file type.
+Then change the name of the file to "App.config"
 
-Example: @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Files\Projects\WUMedCoProject\WUMedCo.mdf;Integrated Security=True"
-     OR  @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Downloads\WUMedCoProject\WUMedCo.mdf;Integrated Security=True"
-
-Simply put this string, edited with your filepath, into the connection string variable and it will change all usages in the code to properly use the database in your directory.
+Example: @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Files\Projects\WUMedCoProject\WUMedCo.mdf;Integrated Security=False"
+     OR  @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Downloads\WUMedCoProject\WUMedCo.mdf;Integrated Security=False"
