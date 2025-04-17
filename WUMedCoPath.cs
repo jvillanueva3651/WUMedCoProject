@@ -8,6 +8,11 @@ namespace WUMedCoProject
 {
     internal class WUMedCoPath
     {
-        public static string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jvill\Documents\Classes\2025SpringWu\DBMS\SemesterProject\WUMedCoProject\WUMedCo.mdf;Integrated Security=True";
+        public static string _connectionString = @"
+            Data Source=(LocalDB)\MSSQLLocalDB;
+            AttachDbFilename=C:\Users\jvill\Documents\Classes\2025SpringWu\DBMS\SemesterProject\WUMedCoProject\WUMedCo.mdf;
+            User Id=AdminUser;
+            Password=ClassProject123!;
+            Integrated Security=False;";
     }
 }
