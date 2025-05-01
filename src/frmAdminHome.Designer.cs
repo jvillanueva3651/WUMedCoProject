@@ -155,6 +155,7 @@
             Controls.Add(label1);
             Name = "frmAdminHome";
             Text = "frmAdminHome";
+            FormClosed += frmAdminHome_FormClosed;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

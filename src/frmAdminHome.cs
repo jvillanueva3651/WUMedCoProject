@@ -100,5 +100,13 @@ namespace WUMedCoProject.src
             equipmentCRUD.FormClosed += (s, args) => this.Show();
             equipmentCRUD.Show();
         }
+
+        /***********************************************************************
+         * Method to ensure application shutdown.
+         **********************************************************************/
+        private void frmAdminHome_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }
