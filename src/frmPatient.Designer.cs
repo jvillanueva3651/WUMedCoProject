@@ -83,12 +83,14 @@
             txtCost = new TextBox();
             txtCopay = new TextBox();
             txtCoverageDetails = new TextBox();
+            imgPatientProfilePic = new PictureBox();
             tlpMainLayout.SuspendLayout();
             gbPatientDetails.SuspendLayout();
             gbAddress.SuspendLayout();
             gbEmergencyContact.SuspendLayout();
             gbInsurance.SuspendLayout();
             flpButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).BeginInit();
             SuspendLayout();
             // 
             // tlpMainLayout
@@ -114,6 +116,7 @@
             // 
             // gbPatientDetails
             // 
+            gbPatientDetails.Controls.Add(imgPatientProfilePic);
             gbPatientDetails.Controls.Add(txtEmail);
             gbPatientDetails.Controls.Add(lblEmail);
             gbPatientDetails.Controls.Add(txtPhone);
@@ -609,6 +612,14 @@
             txtCoverageDetails.Size = new Size(684, 183);
             txtCoverageDetails.TabIndex = 15;
             // 
+            // imgPatientProfilePic
+            // 
+            imgPatientProfilePic.Location = new Point(487, 95);
+            imgPatientProfilePic.Name = "imgPatientProfilePic";
+            imgPatientProfilePic.Size = new Size(181, 157);
+            imgPatientProfilePic.TabIndex = 14;
+            imgPatientProfilePic.TabStop = false;
+            // 
             // frmPatient
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -627,6 +638,7 @@
             gbInsurance.ResumeLayout(false);
             gbInsurance.PerformLayout();
             flpButtons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).EndInit();
             ResumeLayout(false);
         }
 
@@ -688,5 +700,6 @@
         private TextBox txtCoverageDetails;
         private TextBox txtCopay;
         private TextBox txtCost;
+        private PictureBox imgPatientProfilePic;
     }
 }
