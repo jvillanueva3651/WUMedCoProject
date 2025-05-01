@@ -16,5 +16,10 @@ namespace WUMedCoProject.src
         {
             InitializeComponent();
         }
+
+        private void lblCopay_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -63,14 +63,26 @@
             txtECFirstname = new TextBox();
             lblECFirstname = new Label();
             gbInsurance = new GroupBox();
+            txtInsuranceProvider = new TextBox();
+            lblInsuranceProvider = new Label();
+            txtInsuranceID = new TextBox();
+            lblInsuranceID = new Label();
             flpButtons = new FlowLayoutPanel();
             btnSave = new Button();
             btnCancel = new Button();
             btnExit = new Button();
-            lblInsuranceID = new Label();
-            txtInsuranceID = new TextBox();
-            lblInsuranceProvider = new Label();
-            txtInsuranceProvider = new TextBox();
+            lblInsuranceType = new Label();
+            txtInsuranceType = new TextBox();
+            lblEffectiveDate = new Label();
+            lblTerminationDate = new Label();
+            lblCost = new Label();
+            lblCopay = new Label();
+            lblCoverageDetails = new Label();
+            dtpEffectiveDate = new DateTimePicker();
+            dtpTerminationDate = new DateTimePicker();
+            txtCost = new TextBox();
+            txtCopay = new TextBox();
+            txtCoverageDetails = new TextBox();
             tlpMainLayout.SuspendLayout();
             gbPatientDetails.SuspendLayout();
             gbAddress.SuspendLayout();
@@ -97,7 +109,7 @@
             tlpMainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpMainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 45F));
             tlpMainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
-            tlpMainLayout.Size = new Size(775, 1007);
+            tlpMainLayout.Size = new Size(717, 1007);
             tlpMainLayout.TabIndex = 0;
             // 
             // gbPatientDetails
@@ -119,7 +131,7 @@
             gbPatientDetails.Dock = DockStyle.Fill;
             gbPatientDetails.Location = new Point(3, 3);
             gbPatientDetails.Name = "gbPatientDetails";
-            gbPatientDetails.Size = new Size(769, 281);
+            gbPatientDetails.Size = new Size(711, 281);
             gbPatientDetails.TabIndex = 0;
             gbPatientDetails.TabStop = false;
             gbPatientDetails.Text = "Patient Details";
@@ -184,7 +196,7 @@
             lblSex.AutoSize = true;
             lblSex.Location = new Point(487, 29);
             lblSex.Name = "lblSex";
-            lblSex.Size = new Size(25, 15);
+            lblSex.Size = new Size(24, 15);
             lblSex.TabIndex = 6;
             lblSex.Text = "Sex";
             // 
@@ -251,7 +263,7 @@
             gbAddress.Dock = DockStyle.Fill;
             gbAddress.Location = new Point(3, 290);
             gbAddress.Name = "gbAddress";
-            gbAddress.Size = new Size(769, 137);
+            gbAddress.Size = new Size(711, 137);
             gbAddress.TabIndex = 1;
             gbAddress.TabStop = false;
             gbAddress.Text = "Patient Address";
@@ -348,7 +360,7 @@
             gbEmergencyContact.Dock = DockStyle.Fill;
             gbEmergencyContact.Location = new Point(3, 433);
             gbEmergencyContact.Name = "gbEmergencyContact";
-            gbEmergencyContact.Size = new Size(769, 89);
+            gbEmergencyContact.Size = new Size(711, 89);
             gbEmergencyContact.TabIndex = 2;
             gbEmergencyContact.TabStop = false;
             gbEmergencyContact.Text = "Emergency Contact";
@@ -403,6 +415,18 @@
             // 
             // gbInsurance
             // 
+            gbInsurance.Controls.Add(txtCoverageDetails);
+            gbInsurance.Controls.Add(txtCopay);
+            gbInsurance.Controls.Add(txtCost);
+            gbInsurance.Controls.Add(dtpTerminationDate);
+            gbInsurance.Controls.Add(dtpEffectiveDate);
+            gbInsurance.Controls.Add(lblCoverageDetails);
+            gbInsurance.Controls.Add(lblCopay);
+            gbInsurance.Controls.Add(lblCost);
+            gbInsurance.Controls.Add(lblTerminationDate);
+            gbInsurance.Controls.Add(lblEffectiveDate);
+            gbInsurance.Controls.Add(txtInsuranceType);
+            gbInsurance.Controls.Add(lblInsuranceType);
             gbInsurance.Controls.Add(txtInsuranceProvider);
             gbInsurance.Controls.Add(lblInsuranceProvider);
             gbInsurance.Controls.Add(txtInsuranceID);
@@ -410,10 +434,42 @@
             gbInsurance.Dock = DockStyle.Fill;
             gbInsurance.Location = new Point(3, 528);
             gbInsurance.Name = "gbInsurance";
-            gbInsurance.Size = new Size(769, 424);
+            gbInsurance.Size = new Size(711, 424);
             gbInsurance.TabIndex = 3;
             gbInsurance.TabStop = false;
             gbInsurance.Text = "Insurance Info";
+            // 
+            // txtInsuranceProvider
+            // 
+            txtInsuranceProvider.Location = new Point(182, 49);
+            txtInsuranceProvider.Name = "txtInsuranceProvider";
+            txtInsuranceProvider.Size = new Size(226, 23);
+            txtInsuranceProvider.TabIndex = 3;
+            // 
+            // lblInsuranceProvider
+            // 
+            lblInsuranceProvider.AutoSize = true;
+            lblInsuranceProvider.Location = new Point(182, 31);
+            lblInsuranceProvider.Name = "lblInsuranceProvider";
+            lblInsuranceProvider.Size = new Size(105, 15);
+            lblInsuranceProvider.TabIndex = 2;
+            lblInsuranceProvider.Text = "Insurance Provider";
+            // 
+            // txtInsuranceID
+            // 
+            txtInsuranceID.Location = new Point(9, 49);
+            txtInsuranceID.Name = "txtInsuranceID";
+            txtInsuranceID.Size = new Size(167, 23);
+            txtInsuranceID.TabIndex = 1;
+            // 
+            // lblInsuranceID
+            // 
+            lblInsuranceID.AutoSize = true;
+            lblInsuranceID.Location = new Point(9, 31);
+            lblInsuranceID.Name = "lblInsuranceID";
+            lblInsuranceID.Size = new Size(69, 15);
+            lblInsuranceID.TabIndex = 0;
+            lblInsuranceID.Text = "InsuranceID";
             // 
             // flpButtons
             // 
@@ -425,12 +481,12 @@
             flpButtons.Location = new Point(3, 958);
             flpButtons.Name = "flpButtons";
             flpButtons.Padding = new Padding(5);
-            flpButtons.Size = new Size(769, 46);
+            flpButtons.Size = new Size(711, 46);
             flpButtons.TabIndex = 4;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(666, 8);
+            btnSave.Location = new Point(608, 8);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(90, 30);
             btnSave.TabIndex = 0;
@@ -439,7 +495,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(570, 8);
+            btnCancel.Location = new Point(512, 8);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(90, 30);
             btnCancel.TabIndex = 1;
@@ -448,50 +504,116 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(474, 8);
+            btnExit.Location = new Point(416, 8);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(90, 30);
             btnExit.TabIndex = 2;
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = true;
             // 
-            // lblInsuranceID
+            // lblInsuranceType
             // 
-            lblInsuranceID.AutoSize = true;
-            lblInsuranceID.Location = new Point(9, 31);
-            lblInsuranceID.Name = "lblInsuranceID";
-            lblInsuranceID.Size = new Size(69, 15);
-            lblInsuranceID.TabIndex = 0;
-            lblInsuranceID.Text = "InsuranceID";
+            lblInsuranceType.AutoSize = true;
+            lblInsuranceType.Location = new Point(414, 31);
+            lblInsuranceType.Name = "lblInsuranceType";
+            lblInsuranceType.Size = new Size(86, 15);
+            lblInsuranceType.TabIndex = 4;
+            lblInsuranceType.Text = "Insurance Type";
             // 
-            // txtInsuranceID
+            // txtInsuranceType
             // 
-            txtInsuranceID.Location = new Point(9, 49);
-            txtInsuranceID.Name = "txtInsuranceID";
-            txtInsuranceID.Size = new Size(167, 23);
-            txtInsuranceID.TabIndex = 1;
+            txtInsuranceType.Location = new Point(414, 49);
+            txtInsuranceType.Name = "txtInsuranceType";
+            txtInsuranceType.Size = new Size(198, 23);
+            txtInsuranceType.TabIndex = 5;
             // 
-            // lblInsuranceProvider
+            // lblEffectiveDate
             // 
-            lblInsuranceProvider.AutoSize = true;
-            lblInsuranceProvider.Location = new Point(182, 31);
-            lblInsuranceProvider.Name = "lblInsuranceProvider";
-            lblInsuranceProvider.Size = new Size(105, 15);
-            lblInsuranceProvider.TabIndex = 2;
-            lblInsuranceProvider.Text = "Insurance Provider";
+            lblEffectiveDate.AutoSize = true;
+            lblEffectiveDate.Location = new Point(9, 117);
+            lblEffectiveDate.Name = "lblEffectiveDate";
+            lblEffectiveDate.Size = new Size(79, 15);
+            lblEffectiveDate.TabIndex = 6;
+            lblEffectiveDate.Text = "Effective Date";
             // 
-            // txtInsuranceProvider
+            // lblTerminationDate
             // 
-            txtInsuranceProvider.Location = new Point(182, 49);
-            txtInsuranceProvider.Name = "txtInsuranceProvider";
-            txtInsuranceProvider.Size = new Size(226, 23);
-            txtInsuranceProvider.TabIndex = 3;
+            lblTerminationDate.AutoSize = true;
+            lblTerminationDate.Location = new Point(262, 117);
+            lblTerminationDate.Name = "lblTerminationDate";
+            lblTerminationDate.Size = new Size(98, 15);
+            lblTerminationDate.TabIndex = 7;
+            lblTerminationDate.Text = "Termination Date";
+            // 
+            // lblCost
+            // 
+            lblCost.AutoSize = true;
+            lblCost.Location = new Point(487, 117);
+            lblCost.Name = "lblCost";
+            lblCost.Size = new Size(31, 15);
+            lblCost.TabIndex = 8;
+            lblCost.Text = "Cost";
+            // 
+            // lblCopay
+            // 
+            lblCopay.AutoSize = true;
+            lblCopay.Location = new Point(593, 117);
+            lblCopay.Name = "lblCopay";
+            lblCopay.Size = new Size(41, 15);
+            lblCopay.TabIndex = 9;
+            lblCopay.Text = "Copay";
+            lblCopay.Click += lblCopay_Click;
+            // 
+            // lblCoverageDetails
+            // 
+            lblCoverageDetails.AutoSize = true;
+            lblCoverageDetails.Location = new Point(9, 209);
+            lblCoverageDetails.Name = "lblCoverageDetails";
+            lblCoverageDetails.Size = new Size(95, 15);
+            lblCoverageDetails.TabIndex = 10;
+            lblCoverageDetails.Text = "Coverage Details";
+            // 
+            // dtpEffectiveDate
+            // 
+            dtpEffectiveDate.Location = new Point(9, 135);
+            dtpEffectiveDate.Name = "dtpEffectiveDate";
+            dtpEffectiveDate.Size = new Size(200, 23);
+            dtpEffectiveDate.TabIndex = 11;
+            // 
+            // dtpTerminationDate
+            // 
+            dtpTerminationDate.Location = new Point(262, 135);
+            dtpTerminationDate.Name = "dtpTerminationDate";
+            dtpTerminationDate.Size = new Size(200, 23);
+            dtpTerminationDate.TabIndex = 12;
+            // 
+            // txtCost
+            // 
+            txtCost.Location = new Point(487, 135);
+            txtCost.Name = "txtCost";
+            txtCost.Size = new Size(100, 23);
+            txtCost.TabIndex = 13;
+            // 
+            // txtCopay
+            // 
+            txtCopay.Location = new Point(593, 135);
+            txtCopay.Name = "txtCopay";
+            txtCopay.Size = new Size(100, 23);
+            txtCopay.TabIndex = 14;
+            // 
+            // txtCoverageDetails
+            // 
+            txtCoverageDetails.Location = new Point(9, 227);
+            txtCoverageDetails.Multiline = true;
+            txtCoverageDetails.Name = "txtCoverageDetails";
+            txtCoverageDetails.Size = new Size(684, 183);
+            txtCoverageDetails.TabIndex = 15;
             // 
             // frmPatient
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(775, 1007);
+            ClientSize = new Size(717, 1007);
             Controls.Add(tlpMainLayout);
             Name = "frmPatient";
             Text = "frmPatient";
@@ -554,5 +676,17 @@
         private TextBox txtInsuranceProvider;
         private Label lblInsuranceProvider;
         private TextBox txtInsuranceID;
+        private Label lblCoverageDetails;
+        private Label lblCopay;
+        private Label lblCost;
+        private Label lblTerminationDate;
+        private Label lblEffectiveDate;
+        private TextBox txtInsuranceType;
+        private Label lblInsuranceType;
+        private DateTimePicker dtpTerminationDate;
+        private DateTimePicker dtpEffectiveDate;
+        private TextBox txtCoverageDetails;
+        private TextBox txtCopay;
+        private TextBox txtCost;
     }
 }
