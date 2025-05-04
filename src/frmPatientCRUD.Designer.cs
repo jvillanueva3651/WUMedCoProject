@@ -50,6 +50,7 @@
             dgvPatients.Name = "dgvPatients";
             dgvPatients.Size = new Size(1143, 550);
             dgvPatients.TabIndex = 0;
+            dgvPatients.CellClick += dgvPatients_CellClick;
             // 
             // dgvPatientName
             // 
