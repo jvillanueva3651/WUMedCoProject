@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             dgvPatients = new DataGridView();
+            btnAddPatient = new Button();
+            PatientID = new DataGridViewTextBoxColumn();
             dgvPatientName = new DataGridViewTextBoxColumn();
             dgvDoB = new DataGridViewTextBoxColumn();
             dgvSex = new DataGridViewTextBoxColumn();
@@ -38,70 +40,18 @@
             dgvBtnView = new DataGridViewButtonColumn();
             dgvBtnEdit = new DataGridViewButtonColumn();
             dgvBtnDelete = new DataGridViewButtonColumn();
-            btnAddPatient = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvPatients).BeginInit();
             SuspendLayout();
             // 
             // dgvPatients
             // 
             dgvPatients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPatients.Columns.AddRange(new DataGridViewColumn[] { dgvPatientName, dgvDoB, dgvSex, dgvSSN, dgvPhone, dgvEmail, dgvBtnView, dgvBtnEdit, dgvBtnDelete });
+            dgvPatients.Columns.AddRange(new DataGridViewColumn[] { PatientID, dgvPatientName, dgvDoB, dgvSex, dgvSSN, dgvPhone, dgvEmail, dgvBtnView, dgvBtnEdit, dgvBtnDelete });
             dgvPatients.Location = new Point(37, 23);
             dgvPatients.Name = "dgvPatients";
             dgvPatients.Size = new Size(1143, 550);
             dgvPatients.TabIndex = 0;
             dgvPatients.CellClick += dgvPatients_CellClick;
-            // 
-            // dgvPatientName
-            // 
-            dgvPatientName.HeaderText = "Name";
-            dgvPatientName.Name = "dgvPatientName";
-            dgvPatientName.Width = 250;
-            // 
-            // dgvDoB
-            // 
-            dgvDoB.HeaderText = "Date of Birth";
-            dgvDoB.Name = "dgvDoB";
-            // 
-            // dgvSex
-            // 
-            dgvSex.HeaderText = "Sex";
-            dgvSex.Name = "dgvSex";
-            dgvSex.Width = 50;
-            // 
-            // dgvSSN
-            // 
-            dgvSSN.HeaderText = "SSN";
-            dgvSSN.Name = "dgvSSN";
-            // 
-            // dgvPhone
-            // 
-            dgvPhone.HeaderText = "Phone #";
-            dgvPhone.Name = "dgvPhone";
-            // 
-            // dgvEmail
-            // 
-            dgvEmail.HeaderText = "Email";
-            dgvEmail.Name = "dgvEmail";
-            dgvEmail.Width = 200;
-            // 
-            // dgvBtnView
-            // 
-            dgvBtnView.HeaderText = "";
-            dgvBtnView.Name = "dgvBtnView";
-            dgvBtnView.Text = "View";
-            // 
-            // dgvBtnEdit
-            // 
-            dgvBtnEdit.HeaderText = "";
-            dgvBtnEdit.Name = "dgvBtnEdit";
-            dgvBtnEdit.Text = "Edit";
-            // 
-            // dgvBtnDelete
-            // 
-            dgvBtnDelete.HeaderText = "";
-            dgvBtnDelete.Name = "dgvBtnDelete";
-            dgvBtnDelete.Text = "Delete";
             // 
             // btnAddPatient
             // 
@@ -113,6 +63,72 @@
             btnAddPatient.Text = "Add a patient";
             btnAddPatient.UseVisualStyleBackColor = true;
             btnAddPatient.Click += btnAddPatient_Click;
+            // 
+            // PatientID
+            // 
+            PatientID.HeaderText = "PatientID";
+            PatientID.Name = "PatientID";
+            PatientID.ReadOnly = true;
+            // 
+            // dgvPatientName
+            // 
+            dgvPatientName.DataPropertyName = "FullName";
+            dgvPatientName.HeaderText = "Name";
+            dgvPatientName.Name = "dgvPatientName";
+            dgvPatientName.Width = 250;
+            // 
+            // dgvDoB
+            // 
+            dgvDoB.DataPropertyName = "DoB";
+            dgvDoB.HeaderText = "Date of Birth";
+            dgvDoB.Name = "dgvDoB";
+            // 
+            // dgvSex
+            // 
+            dgvSex.DataPropertyName = "Sex";
+            dgvSex.HeaderText = "Sex";
+            dgvSex.Name = "dgvSex";
+            dgvSex.Width = 50;
+            // 
+            // dgvSSN
+            // 
+            dgvSSN.DataPropertyName = "SSN";
+            dgvSSN.HeaderText = "SSN";
+            dgvSSN.Name = "dgvSSN";
+            // 
+            // dgvPhone
+            // 
+            dgvPhone.DataPropertyName = "PhoneNumber";
+            dgvPhone.HeaderText = "Phone #";
+            dgvPhone.Name = "dgvPhone";
+            // 
+            // dgvEmail
+            // 
+            dgvEmail.DataPropertyName = "Email";
+            dgvEmail.HeaderText = "Email";
+            dgvEmail.Name = "dgvEmail";
+            dgvEmail.Width = 200;
+            // 
+            // dgvBtnView
+            // 
+            dgvBtnView.HeaderText = "";
+            dgvBtnView.Name = "dgvBtnView";
+            dgvBtnView.Text = "View";
+            dgvBtnView.UseColumnTextForButtonValue = true;
+            // 
+            // dgvBtnEdit
+            // 
+            dgvBtnEdit.HeaderText = "";
+            dgvBtnEdit.Name = "dgvBtnEdit";
+            dgvBtnEdit.Text = "Edit";
+            dgvBtnEdit.UseColumnTextForButtonValue = true;
+            // 
+            // dgvBtnDelete
+            // 
+            dgvBtnDelete.HeaderText = "";
+            dgvBtnDelete.Name = "dgvBtnDelete";
+            dgvBtnDelete.Text = "Delete";
+            dgvBtnDelete.UseColumnTextForButtonValue = true;
             // 
             // frmPatientCRUD
             // 
@@ -130,6 +146,8 @@
         #endregion
 
         private DataGridView dgvPatients;
+        private Button btnAddPatient;
+        private DataGridViewTextBoxColumn PatientID;
         private DataGridViewTextBoxColumn dgvPatientName;
         private DataGridViewTextBoxColumn dgvDoB;
         private DataGridViewTextBoxColumn dgvSex;
@@ -139,6 +157,5 @@
         private DataGridViewButtonColumn dgvBtnView;
         private DataGridViewButtonColumn dgvBtnEdit;
         private DataGridViewButtonColumn dgvBtnDelete;
-        private Button btnAddPatient;
     }
 }

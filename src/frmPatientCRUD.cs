@@ -55,7 +55,12 @@ namespace WUMedCoProject.src
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            var patientId = Convert.ToInt32(dgvPatients.Rows[e.RowIndex].Cells["PatientID"].Value);
+            var dataTable = (DataTable)dgvPatients.DataSource;
+
+            var patientId = Convert.ToInt32(dataTable.Rows[e.RowIndex]["PatientID"]);
+
+            //For Debugging
+            //MessageBox.Show($"PatientID: {patientId}");
 
             if (dgvPatients.Columns[e.ColumnIndex] == dgvBtnView)
             {
