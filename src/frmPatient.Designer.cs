@@ -39,7 +39,7 @@
             lblSSN = new Label();
             txtSex = new TextBox();
             lblSex = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            dtpDateOfBirth = new DateTimePicker();
             lblDOB = new Label();
             txtLastname = new TextBox();
             lblLastName = new Label();
@@ -64,6 +64,8 @@
             txtECFirstname = new TextBox();
             lblECFirstname = new Label();
             gbInsurance = new GroupBox();
+            chkbxNoInsurance = new CheckBox();
+            chkbxNoTerminationDate = new CheckBox();
             txtCoverageDetails = new TextBox();
             txtCopay = new TextBox();
             txtCost = new TextBox();
@@ -125,7 +127,7 @@
             gbPatientDetails.Controls.Add(lblSSN);
             gbPatientDetails.Controls.Add(txtSex);
             gbPatientDetails.Controls.Add(lblSex);
-            gbPatientDetails.Controls.Add(dateTimePicker1);
+            gbPatientDetails.Controls.Add(dtpDateOfBirth);
             gbPatientDetails.Controls.Add(lblDOB);
             gbPatientDetails.Controls.Add(txtLastname);
             gbPatientDetails.Controls.Add(lblLastName);
@@ -211,12 +213,12 @@
             lblSex.TabIndex = 6;
             lblSex.Text = "Sex";
             // 
-            // dateTimePicker1
+            // dtpDateOfBirth
             // 
-            dateTimePicker1.Location = new Point(9, 113);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 5;
+            dtpDateOfBirth.Location = new Point(9, 113);
+            dtpDateOfBirth.Name = "dtpDateOfBirth";
+            dtpDateOfBirth.Size = new Size(200, 23);
+            dtpDateOfBirth.TabIndex = 5;
             // 
             // lblDOB
             // 
@@ -426,6 +428,8 @@
             // 
             // gbInsurance
             // 
+            gbInsurance.Controls.Add(chkbxNoInsurance);
+            gbInsurance.Controls.Add(chkbxNoTerminationDate);
             gbInsurance.Controls.Add(txtCoverageDetails);
             gbInsurance.Controls.Add(txtCopay);
             gbInsurance.Controls.Add(txtCost);
@@ -449,6 +453,28 @@
             gbInsurance.TabIndex = 3;
             gbInsurance.TabStop = false;
             gbInsurance.Text = "Insurance Info";
+            // 
+            // chkbxNoInsurance
+            // 
+            chkbxNoInsurance.AutoSize = true;
+            chkbxNoInsurance.Location = new Point(9, 78);
+            chkbxNoInsurance.Name = "chkbxNoInsurance";
+            chkbxNoInsurance.Size = new Size(96, 19);
+            chkbxNoInsurance.TabIndex = 17;
+            chkbxNoInsurance.Text = "No Insurance";
+            chkbxNoInsurance.UseVisualStyleBackColor = true;
+            chkbxNoInsurance.CheckedChanged += chkbxNoInsurance_CheckedChanged;
+            // 
+            // chkbxNoTerminationDate
+            // 
+            chkbxNoTerminationDate.AutoSize = true;
+            chkbxNoTerminationDate.Location = new Point(262, 164);
+            chkbxNoTerminationDate.Name = "chkbxNoTerminationDate";
+            chkbxNoTerminationDate.Size = new Size(135, 19);
+            chkbxNoTerminationDate.TabIndex = 16;
+            chkbxNoTerminationDate.Text = "No Termination Date";
+            chkbxNoTerminationDate.UseVisualStyleBackColor = true;
+            chkbxNoTerminationDate.CheckedChanged += chkbxNoTerminationDate_CheckedChanged;
             // 
             // txtCoverageDetails
             // 
@@ -478,6 +504,7 @@
             dtpTerminationDate.Name = "dtpTerminationDate";
             dtpTerminationDate.Size = new Size(200, 23);
             dtpTerminationDate.TabIndex = 12;
+            dtpTerminationDate.ValueChanged += dtpTerminationDate_ValueChanged;
             // 
             // dtpEffectiveDate
             // 
@@ -659,7 +686,7 @@
         private Label lblLastName;
         private TextBox txtFirstname;
         private TextBox txtLastname;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dtpDateOfBirth;
         private Label lblDOB;
         private TextBox txtEmail;
         private Label lblEmail;
@@ -703,5 +730,7 @@
         private TextBox txtCopay;
         private TextBox txtCost;
         private PictureBox imgPatientProfilePic;
+        private CheckBox chkbxNoInsurance;
+        private CheckBox chkbxNoTerminationDate;
     }
 }
