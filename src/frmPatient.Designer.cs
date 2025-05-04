@@ -30,6 +30,7 @@
         {
             tlpMainLayout = new TableLayoutPanel();
             gbPatientDetails = new GroupBox();
+            imgPatientProfilePic = new PictureBox();
             txtEmail = new TextBox();
             lblEmail = new Label();
             txtPhone = new TextBox();
@@ -63,6 +64,18 @@
             txtECFirstname = new TextBox();
             lblECFirstname = new Label();
             gbInsurance = new GroupBox();
+            txtCoverageDetails = new TextBox();
+            txtCopay = new TextBox();
+            txtCost = new TextBox();
+            dtpTerminationDate = new DateTimePicker();
+            dtpEffectiveDate = new DateTimePicker();
+            lblCoverageDetails = new Label();
+            lblCopay = new Label();
+            lblCost = new Label();
+            lblTerminationDate = new Label();
+            lblEffectiveDate = new Label();
+            txtInsuranceType = new TextBox();
+            lblInsuranceType = new Label();
             txtInsuranceProvider = new TextBox();
             lblInsuranceProvider = new Label();
             txtInsuranceID = new TextBox();
@@ -71,26 +84,13 @@
             btnSave = new Button();
             btnCancel = new Button();
             btnExit = new Button();
-            lblInsuranceType = new Label();
-            txtInsuranceType = new TextBox();
-            lblEffectiveDate = new Label();
-            lblTerminationDate = new Label();
-            lblCost = new Label();
-            lblCopay = new Label();
-            lblCoverageDetails = new Label();
-            dtpEffectiveDate = new DateTimePicker();
-            dtpTerminationDate = new DateTimePicker();
-            txtCost = new TextBox();
-            txtCopay = new TextBox();
-            txtCoverageDetails = new TextBox();
-            imgPatientProfilePic = new PictureBox();
             tlpMainLayout.SuspendLayout();
             gbPatientDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).BeginInit();
             gbAddress.SuspendLayout();
             gbEmergencyContact.SuspendLayout();
             gbInsurance.SuspendLayout();
             flpButtons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).BeginInit();
             SuspendLayout();
             // 
             // tlpMainLayout
@@ -138,6 +138,14 @@
             gbPatientDetails.TabIndex = 0;
             gbPatientDetails.TabStop = false;
             gbPatientDetails.Text = "Patient Details";
+            // 
+            // imgPatientProfilePic
+            // 
+            imgPatientProfilePic.Location = new Point(487, 95);
+            imgPatientProfilePic.Name = "imgPatientProfilePic";
+            imgPatientProfilePic.Size = new Size(181, 157);
+            imgPatientProfilePic.TabIndex = 14;
+            imgPatientProfilePic.TabStop = false;
             // 
             // txtEmail
             // 
@@ -199,7 +207,7 @@
             lblSex.AutoSize = true;
             lblSex.Location = new Point(487, 29);
             lblSex.Name = "lblSex";
-            lblSex.Size = new Size(24, 15);
+            lblSex.Size = new Size(25, 15);
             lblSex.TabIndex = 6;
             lblSex.Text = "Sex";
             // 
@@ -442,6 +450,103 @@
             gbInsurance.TabStop = false;
             gbInsurance.Text = "Insurance Info";
             // 
+            // txtCoverageDetails
+            // 
+            txtCoverageDetails.Location = new Point(9, 227);
+            txtCoverageDetails.Multiline = true;
+            txtCoverageDetails.Name = "txtCoverageDetails";
+            txtCoverageDetails.Size = new Size(684, 183);
+            txtCoverageDetails.TabIndex = 15;
+            // 
+            // txtCopay
+            // 
+            txtCopay.Location = new Point(593, 135);
+            txtCopay.Name = "txtCopay";
+            txtCopay.Size = new Size(100, 23);
+            txtCopay.TabIndex = 14;
+            // 
+            // txtCost
+            // 
+            txtCost.Location = new Point(487, 135);
+            txtCost.Name = "txtCost";
+            txtCost.Size = new Size(100, 23);
+            txtCost.TabIndex = 13;
+            // 
+            // dtpTerminationDate
+            // 
+            dtpTerminationDate.Location = new Point(262, 135);
+            dtpTerminationDate.Name = "dtpTerminationDate";
+            dtpTerminationDate.Size = new Size(200, 23);
+            dtpTerminationDate.TabIndex = 12;
+            // 
+            // dtpEffectiveDate
+            // 
+            dtpEffectiveDate.Location = new Point(9, 135);
+            dtpEffectiveDate.Name = "dtpEffectiveDate";
+            dtpEffectiveDate.Size = new Size(200, 23);
+            dtpEffectiveDate.TabIndex = 11;
+            // 
+            // lblCoverageDetails
+            // 
+            lblCoverageDetails.AutoSize = true;
+            lblCoverageDetails.Location = new Point(9, 209);
+            lblCoverageDetails.Name = "lblCoverageDetails";
+            lblCoverageDetails.Size = new Size(95, 15);
+            lblCoverageDetails.TabIndex = 10;
+            lblCoverageDetails.Text = "Coverage Details";
+            // 
+            // lblCopay
+            // 
+            lblCopay.AutoSize = true;
+            lblCopay.Location = new Point(593, 117);
+            lblCopay.Name = "lblCopay";
+            lblCopay.Size = new Size(41, 15);
+            lblCopay.TabIndex = 9;
+            lblCopay.Text = "Copay";
+            // 
+            // lblCost
+            // 
+            lblCost.AutoSize = true;
+            lblCost.Location = new Point(487, 117);
+            lblCost.Name = "lblCost";
+            lblCost.Size = new Size(31, 15);
+            lblCost.TabIndex = 8;
+            lblCost.Text = "Cost";
+            // 
+            // lblTerminationDate
+            // 
+            lblTerminationDate.AutoSize = true;
+            lblTerminationDate.Location = new Point(262, 117);
+            lblTerminationDate.Name = "lblTerminationDate";
+            lblTerminationDate.Size = new Size(97, 15);
+            lblTerminationDate.TabIndex = 7;
+            lblTerminationDate.Text = "Termination Date";
+            // 
+            // lblEffectiveDate
+            // 
+            lblEffectiveDate.AutoSize = true;
+            lblEffectiveDate.Location = new Point(9, 117);
+            lblEffectiveDate.Name = "lblEffectiveDate";
+            lblEffectiveDate.Size = new Size(79, 15);
+            lblEffectiveDate.TabIndex = 6;
+            lblEffectiveDate.Text = "Effective Date";
+            // 
+            // txtInsuranceType
+            // 
+            txtInsuranceType.Location = new Point(414, 49);
+            txtInsuranceType.Name = "txtInsuranceType";
+            txtInsuranceType.Size = new Size(198, 23);
+            txtInsuranceType.TabIndex = 5;
+            // 
+            // lblInsuranceType
+            // 
+            lblInsuranceType.AutoSize = true;
+            lblInsuranceType.Location = new Point(414, 31);
+            lblInsuranceType.Name = "lblInsuranceType";
+            lblInsuranceType.Size = new Size(85, 15);
+            lblInsuranceType.TabIndex = 4;
+            lblInsuranceType.Text = "Insurance Type";
+            // 
             // txtInsuranceProvider
             // 
             txtInsuranceProvider.Location = new Point(182, 49);
@@ -495,6 +600,7 @@
             btnSave.TabIndex = 0;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
@@ -504,6 +610,7 @@
             btnCancel.TabIndex = 1;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnExit
             // 
@@ -513,112 +620,7 @@
             btnExit.TabIndex = 2;
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = true;
-            // 
-            // lblInsuranceType
-            // 
-            lblInsuranceType.AutoSize = true;
-            lblInsuranceType.Location = new Point(414, 31);
-            lblInsuranceType.Name = "lblInsuranceType";
-            lblInsuranceType.Size = new Size(86, 15);
-            lblInsuranceType.TabIndex = 4;
-            lblInsuranceType.Text = "Insurance Type";
-            // 
-            // txtInsuranceType
-            // 
-            txtInsuranceType.Location = new Point(414, 49);
-            txtInsuranceType.Name = "txtInsuranceType";
-            txtInsuranceType.Size = new Size(198, 23);
-            txtInsuranceType.TabIndex = 5;
-            // 
-            // lblEffectiveDate
-            // 
-            lblEffectiveDate.AutoSize = true;
-            lblEffectiveDate.Location = new Point(9, 117);
-            lblEffectiveDate.Name = "lblEffectiveDate";
-            lblEffectiveDate.Size = new Size(79, 15);
-            lblEffectiveDate.TabIndex = 6;
-            lblEffectiveDate.Text = "Effective Date";
-            // 
-            // lblTerminationDate
-            // 
-            lblTerminationDate.AutoSize = true;
-            lblTerminationDate.Location = new Point(262, 117);
-            lblTerminationDate.Name = "lblTerminationDate";
-            lblTerminationDate.Size = new Size(98, 15);
-            lblTerminationDate.TabIndex = 7;
-            lblTerminationDate.Text = "Termination Date";
-            // 
-            // lblCost
-            // 
-            lblCost.AutoSize = true;
-            lblCost.Location = new Point(487, 117);
-            lblCost.Name = "lblCost";
-            lblCost.Size = new Size(31, 15);
-            lblCost.TabIndex = 8;
-            lblCost.Text = "Cost";
-            // 
-            // lblCopay
-            // 
-            lblCopay.AutoSize = true;
-            lblCopay.Location = new Point(593, 117);
-            lblCopay.Name = "lblCopay";
-            lblCopay.Size = new Size(41, 15);
-            lblCopay.TabIndex = 9;
-            lblCopay.Text = "Copay";
-            lblCopay.Click += lblCopay_Click;
-            // 
-            // lblCoverageDetails
-            // 
-            lblCoverageDetails.AutoSize = true;
-            lblCoverageDetails.Location = new Point(9, 209);
-            lblCoverageDetails.Name = "lblCoverageDetails";
-            lblCoverageDetails.Size = new Size(95, 15);
-            lblCoverageDetails.TabIndex = 10;
-            lblCoverageDetails.Text = "Coverage Details";
-            // 
-            // dtpEffectiveDate
-            // 
-            dtpEffectiveDate.Location = new Point(9, 135);
-            dtpEffectiveDate.Name = "dtpEffectiveDate";
-            dtpEffectiveDate.Size = new Size(200, 23);
-            dtpEffectiveDate.TabIndex = 11;
-            // 
-            // dtpTerminationDate
-            // 
-            dtpTerminationDate.Location = new Point(262, 135);
-            dtpTerminationDate.Name = "dtpTerminationDate";
-            dtpTerminationDate.Size = new Size(200, 23);
-            dtpTerminationDate.TabIndex = 12;
-            // 
-            // txtCost
-            // 
-            txtCost.Location = new Point(487, 135);
-            txtCost.Name = "txtCost";
-            txtCost.Size = new Size(100, 23);
-            txtCost.TabIndex = 13;
-            // 
-            // txtCopay
-            // 
-            txtCopay.Location = new Point(593, 135);
-            txtCopay.Name = "txtCopay";
-            txtCopay.Size = new Size(100, 23);
-            txtCopay.TabIndex = 14;
-            // 
-            // txtCoverageDetails
-            // 
-            txtCoverageDetails.Location = new Point(9, 227);
-            txtCoverageDetails.Multiline = true;
-            txtCoverageDetails.Name = "txtCoverageDetails";
-            txtCoverageDetails.Size = new Size(684, 183);
-            txtCoverageDetails.TabIndex = 15;
-            // 
-            // imgPatientProfilePic
-            // 
-            imgPatientProfilePic.Location = new Point(487, 95);
-            imgPatientProfilePic.Name = "imgPatientProfilePic";
-            imgPatientProfilePic.Size = new Size(181, 157);
-            imgPatientProfilePic.TabIndex = 14;
-            imgPatientProfilePic.TabStop = false;
+            btnExit.Click += btnExit_Click;
             // 
             // frmPatient
             // 
@@ -631,6 +633,7 @@
             tlpMainLayout.ResumeLayout(false);
             gbPatientDetails.ResumeLayout(false);
             gbPatientDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).EndInit();
             gbAddress.ResumeLayout(false);
             gbAddress.PerformLayout();
             gbEmergencyContact.ResumeLayout(false);
@@ -638,7 +641,6 @@
             gbInsurance.ResumeLayout(false);
             gbInsurance.PerformLayout();
             flpButtons.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)imgPatientProfilePic).EndInit();
             ResumeLayout(false);
         }
 
