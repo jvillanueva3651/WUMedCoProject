@@ -282,7 +282,115 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void CreateNewPatient()
         {
-            //TODO: Implement insert logic for Patient + other related tables
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMEDCo"].ConnectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    //Address
+                    int addressId;
+                    using(var cmd = new SqlCommand(
+                        @"INSERT INTO Address (StreetAddress, ApartmentSuiteNum, City, State, ZipCode)
+                          VALUES (@Street, @Apt, @City, @State, @Zip);
+                          SELECT SCOPE_IDENTITY();", 
+                          conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
+                        cmd.Parameters.AddWithValue("@Apt", txtApt.Text);
+                        cmd.Parameters.AddWithValue("@City", txtCity.Text);
+                        cmd.Parameters.AddWithValue("@State", cboxState.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Zip", txtZip.Text);
+                        addressId = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+
+                    //Emergency Contact
+                    int emergencyContactId;
+                    using (var cmd = new SqlCommand(
+                        @"INSERT INTO EmergencyContact (FirstName, LastName, PhoneNumber)
+                          VALUES (@ECFirst, @ECLast, @ECPhone);
+                          SELECT SCOPE_IDENTITY();", 
+                          conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@ECFirst", txtECFirstname.Text);
+                        cmd.Parameters.AddWithValue("@ECLast", txtECLastname.Text);
+                        cmd.Parameters.AddWithValue("@ECPhone", txtECPhoneNum.Text);
+                        emergencyContactId = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+
+                    //Insurance
+                    int? insuranceId = null;
+                    if (!chkbxNoInsurance.Checked)
+                    {
+                        // Insert PolicyType first
+                        int policyTypeId;
+                        using (var cmd = new SqlCommand(
+                            @"INSERT INTO PolicyType (TypeName, Cost, Copay, CoverageDetails)
+                              VALUES (@Type, @Cost, @Copay, @Details);
+                              SELECT SCOPE_IDENTITY();", 
+                              conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Type", txtInsuranceType.Text);
+                            cmd.Parameters.AddWithValue("@Cost", decimal.Parse(txtCost.Text));
+                            cmd.Parameters.AddWithValue("@Copay", decimal.Parse(txtCopay.Text));
+                            cmd.Parameters.AddWithValue("@Details", txtCoverageDetails.Text);
+                            policyTypeId = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
+                        // Insert Insurance
+                        using (var cmd = new SqlCommand(
+                            @"INSERT INTO Insurance (ProviderName, EffectiveDate, TerminationDate, PolicyTypeID)
+                              VALUES (@Provider, @EffDate, @TermDate, @PolicyTypeID);
+                              SELECT SCOPE_IDENTITY();", 
+                              conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Provider", txtInsuranceProvider.Text);
+                            cmd.Parameters.AddWithValue("@EffDate", dtpEffectiveDate.Value);
+                            cmd.Parameters.AddWithValue("@TermDate", chkbxNoTerminationDate.Checked
+                                ? (object)DBNull.Value
+                                : dtpTerminationDate.Value);
+                            cmd.Parameters.AddWithValue("@PolicyTypeID", policyTypeId);
+                            insuranceId = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+                    }
+
+                    //Patient
+                    using (var cmd = new SqlCommand(
+                        @"INSERT INTO Patient (FirstName, LastName, DateOfBirth, Sex, SSN, 
+                                PhoneNumber, Email, AddressID, EmergencyContactID, InsuranceID)
+                              VALUES (@First, @Last, @DOB, @Sex, @SSN, @Phone, @Email, 
+                                @AddressID, @ECID, @InsuranceID)",
+                          conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@First", txtFirstname.Text);
+                        cmd.Parameters.AddWithValue("@Last", txtLastname.Text);
+                        cmd.Parameters.AddWithValue("@DOB", dtpDateOfBirth.Value);
+                        cmd.Parameters.AddWithValue("@Sex", txtSex.Text);
+                        cmd.Parameters.AddWithValue("@SSN", txtSSN.Text); // Should be encrypted in real scenarios
+                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                        cmd.Parameters.AddWithValue("@AddressID", addressId);
+                        cmd.Parameters.AddWithValue("@ECID", emergencyContactId);
+                        cmd.Parameters.AddWithValue("@InsuranceID", insuranceId ?? (object)DBNull.Value);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    MessageBox.Show("Patient created successfully!", "Success");
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error creating patient: {ex.Message}\nAll changes have been rolled back.", "Error");
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         /**********************************************************************
