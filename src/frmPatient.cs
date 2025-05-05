@@ -17,6 +17,7 @@ namespace WUMedCoProject.src
         public enum FormMode { View, Edit, Add }
         private readonly int? _patientId;
         private readonly FormMode _mode;
+        private bool _hasUnsavedChanges = false;
 
         public frmPatient(FormMode mode, int? patientId = null)
         {
@@ -25,8 +26,13 @@ namespace WUMedCoProject.src
             _patientId = patientId;
             PopulateStateComboBox();
 
+            if (_mode == FormMode.Add)
+                _hasUnsavedChanges = false;
+
             InitializeFormBasedOnMode();
             LoadPatientData();
+
+            WireUpChangeEvents(this);
         }
 
         /**********************************************************************
@@ -166,6 +172,8 @@ namespace WUMedCoProject.src
                                     txtCopay.Text = reader["Copay"].ToString();
                                     txtCoverageDetails.Text = reader["CoverageDetails"].ToString();
                                 }
+
+                                _hasUnsavedChanges = false; //Reset unsaved changes flag
                             }
                             else
                             {
@@ -210,23 +218,63 @@ namespace WUMedCoProject.src
                 {
                     MessageBox.Show($"Database Error: {ex.Message}", "Error");
                 }
+                finally
+                {
+                    _hasUnsavedChanges = false;
+                }
             }
         }
 
         /**********************************************************************
          * Method to exit form on button click
          *********************************************************************/
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void btnExit_Click(object sender, EventArgs e) { this.Close(); }
 
         /**********************************************************************
          * Method to cancel form on button click
          *********************************************************************/
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
+        private void btnCancel_Click(object sender, EventArgs e) { this.Close(); }
 
+        /**********************************************************************
+         * Method to check for unsaved changes before closing the form
+         *********************************************************************/
+        private void CheckForUnsavedChangesAndClose()
+        {
+            if (_hasUnsavedChanges)
+            {
+                var result = MessageBox.Show(
+                    "You have unsaved changes. Are you sure you want to exit?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.No)
+                    return; // Cancel closing
+            }
+
+            this.Close();
+        }
+
+        /**********************************************************************
+         * Override method to check for unsaved changes before closing the form
+         *********************************************************************/
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (_hasUnsavedChanges && this.DialogResult != DialogResult.OK)
+            {
+                var result = MessageBox.Show(
+                    "You have unsaved changes. Are you sure you want to exit?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.No)
+                    e.Cancel = true; // Prevent closing
+            }
+
+            base.OnFormClosing(e);
         }
 
         /**********************************************************************
@@ -270,7 +318,7 @@ namespace WUMedCoProject.src
 
         /**********************************************************************
         * Method to handle the "No Insurance" checkbox
-        *********************************************************************/
+        **********************************************************************/
         private void chkbxNoInsurance_CheckedChanged(object sender, EventArgs e)
         {
             txtInsuranceID.Enabled = !chkbxNoInsurance.Checked;
@@ -302,7 +350,7 @@ namespace WUMedCoProject.src
 
         /**********************************************************************
         * Method to handle the "No Termination Date" checkbox
-        *********************************************************************/
+        **********************************************************************/
         private void chkbxNoTerminationDate_CheckedChanged(object sender, EventArgs e)
         {
             dtpTerminationDate.Enabled = !chkbxNoTerminationDate.Checked;
@@ -318,13 +366,43 @@ namespace WUMedCoProject.src
 
         /**********************************************************************
         * Method to uncheck the "No Termination Date" checkbox when the date is changed
-        *********************************************************************/
+        **********************************************************************/
         private void dtpTerminationDate_ValueChanged(object sender, EventArgs e)
         {
             if (dtpTerminationDate.Enabled)
             {
                 chkbxNoTerminationDate.Checked = false;
             }
+        }
+
+        /**********************************************************************
+        * Method to wire up change events for controls
+        **********************************************************************/
+        private void WireUpChangeEvents(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is TextBox)
+                    ((TextBox)ctrl).TextChanged += OnControlChanged;
+                else if (ctrl is ComboBox)
+                    ((ComboBox)ctrl).SelectedIndexChanged += OnControlChanged;
+                else if (ctrl is DateTimePicker)
+                    ((DateTimePicker)ctrl).ValueChanged += OnControlChanged;
+                else if (ctrl is CheckBox)
+                    ((CheckBox)ctrl).CheckedChanged += OnControlChanged;
+
+                // Recurse into nested controls (e.g., GroupBoxes)
+                if (ctrl.HasChildren)
+                    WireUpChangeEvents(ctrl);
+            }
+        }
+
+        /**********************************************************************
+        * Method to set hasUnsavedChanges to true when any control changes
+        **********************************************************************/
+        private void OnControlChanged(object sender, EventArgs e)
+        {
+            _hasUnsavedChanges = true;
         }
     }
 }
