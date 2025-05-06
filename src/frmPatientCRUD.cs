@@ -95,7 +95,32 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void DeletePatient(int patientId)
         {
-            //TODO: Implement delete logic
+            var result = MessageBox.Show("Are you sure you want to delete this patient?", "Delete Patient", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes) return;
+
+            else
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+                {
+                    try
+                    {
+                        var query = "DELETE FROM Patient WHERE PatientID = @PatientID";
+                        var command = new SqlCommand(query, conn);
+                        command.Parameters.AddWithValue("@PatientID", patientId);
+                        conn.Open();
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show($"Error deleting patient: {ex.Message}", "Error");
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        LoadPatients(); //Refreshes the DGV
+                    }
+                }
+            }
         }
     }
 }
