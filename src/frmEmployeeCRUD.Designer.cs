@@ -1,4 +1,6 @@
-﻿namespace WUMedCoProject
+﻿using System.Windows.Forms;
+
+namespace WUMedCoProject.src
 {
     partial class frmEmployeeCRUD
     {
@@ -28,102 +30,154 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            dgvEmployee = new DataGridView();
             dgvEmployeeID = new DataGridViewTextBoxColumn();
             dgvLastName = new DataGridViewTextBoxColumn();
             dgvFirstName = new DataGridViewTextBoxColumn();
             dgvDoB = new DataGridViewTextBoxColumn();
             dgvPosition = new DataGridViewTextBoxColumn();
+            dgvOfficeNumber = new DataGridViewTextBoxColumn();
             dgvExtension = new DataGridViewTextBoxColumn();
             dgvView = new DataGridViewButtonColumn();
             dgvEdit = new DataGridViewButtonColumn();
             dgvDelete = new DataGridViewButtonColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            btnReturnHome = new Button();
+            btnAddNewEmployee = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvEmployee).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvEmployee
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { dgvEmployeeID, dgvLastName, dgvFirstName, dgvDoB, dgvPosition, dgvExtension, dgvView, dgvEdit, dgvDelete });
-            dataGridView1.Location = new Point(12, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(1000, 533);
-            dataGridView1.TabIndex = 0;
+            dgvEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEmployee.Columns.AddRange(new DataGridViewColumn[] { dgvEmployeeID, dgvLastName, dgvFirstName, dgvDoB, dgvPosition, dgvOfficeNumber, dgvExtension, dgvView, dgvEdit, dgvDelete });
+            dgvEmployee.Location = new Point(12, 12);
+            dgvEmployee.Name = "dgvEmployee";
+            dgvEmployee.Size = new Size(1043, 533);
+            dgvEmployee.TabIndex = 0;
+            dgvEmployee.CellClick += new DataGridViewCellEventHandler(dgvEmployee_CellClick);
             // 
             // dgvEmployeeID
             // 
+            dgvEmployeeID.DataPropertyName = "EmployeeID";
             dgvEmployeeID.HeaderText = "EmployeeID";
             dgvEmployeeID.Name = "dgvEmployeeID";
             dgvEmployeeID.ReadOnly = true;
             // 
             // dgvLastName
             // 
+            dgvLastName.DataPropertyName = "LastName";
             dgvLastName.HeaderText = "Last Name";
             dgvLastName.Name = "dgvLastName";
             dgvLastName.ReadOnly = true;
+            dgvLastName.Width = 150;
             // 
             // dgvFirstName
             // 
+            dgvFirstName.DataPropertyName = "FirstName";
             dgvFirstName.HeaderText = "First Name";
             dgvFirstName.Name = "dgvFirstName";
             dgvFirstName.ReadOnly = true;
+            dgvFirstName.Width = 150;
             // 
             // dgvDoB
             // 
+            dgvDoB.DataPropertyName = "DateOfBirth";
             dgvDoB.HeaderText = "Date of Birth";
             dgvDoB.Name = "dgvDoB";
             dgvDoB.ReadOnly = true;
             // 
             // dgvPosition
             // 
+            dgvPosition.DataPropertyName = "Position";
             dgvPosition.HeaderText = "Position";
             dgvPosition.Name = "dgvPosition";
             dgvPosition.ReadOnly = true;
+            dgvPosition.Width = 125;
+            // 
+            // dgvOfficeNumber
+            // 
+            dgvOfficeNumber.DataPropertyName = "OfficeNumber";
+            dgvOfficeNumber.HeaderText = "Office #";
+            dgvOfficeNumber.Name = "dgvOfficeNumber";
+            dgvOfficeNumber.Width = 75;
             // 
             // dgvExtension
             // 
+            dgvExtension.DataPropertyName = "Extension";
             dgvExtension.HeaderText = "Extension";
             dgvExtension.Name = "dgvExtension";
             dgvExtension.ReadOnly = true;
+            dgvExtension.Width = 75;
             // 
             // dgvView
             // 
+            dgvView.DataPropertyName = "View";
             dgvView.HeaderText = "";
             dgvView.Name = "dgvView";
+            dgvView.Width = 75;
             // 
             // dgvEdit
             // 
+            dgvEdit.DataPropertyName = "Edit";
             dgvEdit.HeaderText = "";
             dgvEdit.Name = "dgvEdit";
+            dgvEdit.Width = 75;
             // 
             // dgvDelete
             // 
+            dgvDelete.DataPropertyName = "Delete";
             dgvDelete.HeaderText = "";
             dgvDelete.Name = "dgvDelete";
+            dgvDelete.Width = 75;
+            // 
+            // btnReturnHome
+            // 
+            btnReturnHome.Location = new Point(12, 551);
+            btnReturnHome.Name = "btnReturnHome";
+            btnReturnHome.Size = new Size(160, 27);
+            btnReturnHome.TabIndex = 4;
+            btnReturnHome.Text = "Return to Home";
+            btnReturnHome.UseVisualStyleBackColor = true;
+            btnReturnHome.Click += new EventHandler(btnReturnHome_Click);
+            // 
+            // btnAddNewEmployee
+            // 
+            btnAddNewEmployee.Location = new Point(898, 551);
+            btnAddNewEmployee.Name = "btnAddNewEmployee";
+            btnAddNewEmployee.Size = new Size(160, 27);
+            btnAddNewEmployee.TabIndex = 3;
+            btnAddNewEmployee.Text = "Add New Employee";
+            btnAddNewEmployee.UseVisualStyleBackColor = true;
+            btnAddNewEmployee.Click += new EventHandler(btnAddNewEmployee_Click);
             // 
             // frmEmployeeCRUD
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1239, 641);
-            Controls.Add(dataGridView1);
+            ClientSize = new Size(1070, 589);
+            Controls.Add(btnReturnHome);
+            Controls.Add(btnAddNewEmployee);
+            Controls.Add(dgvEmployee);
             Name = "frmEmployeeCRUD";
             Text = "frmEmployeeCRUD";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvEmployee).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView dgvEmployee;
         private DataGridViewTextBoxColumn dgvEmployeeID;
         private DataGridViewTextBoxColumn dgvLastName;
         private DataGridViewTextBoxColumn dgvFirstName;
         private DataGridViewTextBoxColumn dgvDoB;
         private DataGridViewTextBoxColumn dgvPosition;
+        private DataGridViewTextBoxColumn dgvOfficeNumber;
         private DataGridViewTextBoxColumn dgvExtension;
         private DataGridViewButtonColumn dgvView;
         private DataGridViewButtonColumn dgvEdit;
         private DataGridViewButtonColumn dgvDelete;
+        private Button btnReturnHome;
+        private Button btnAddNewEmployee;
     }
 }
