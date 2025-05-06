@@ -71,7 +71,7 @@ namespace WUMedCoProject
          *********************************************************************/
         private void OpenDepartmentForm()
         {
-            
+            //TODO: Add logic to open form
         }
     }
 }
