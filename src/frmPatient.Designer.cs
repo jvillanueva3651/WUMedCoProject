@@ -560,7 +560,7 @@
             // 
             // txtInsuranceType
             // 
-            txtInsuranceType.Location = new Point(414, 49);
+            txtInsuranceType.Location = new Point(447, 49);
             txtInsuranceType.Name = "txtInsuranceType";
             txtInsuranceType.Size = new Size(198, 23);
             txtInsuranceType.TabIndex = 5;
@@ -568,7 +568,7 @@
             // lblInsuranceType
             // 
             lblInsuranceType.AutoSize = true;
-            lblInsuranceType.Location = new Point(414, 31);
+            lblInsuranceType.Location = new Point(447, 31);
             lblInsuranceType.Name = "lblInsuranceType";
             lblInsuranceType.Size = new Size(85, 15);
             lblInsuranceType.TabIndex = 4;
@@ -576,7 +576,7 @@
             // 
             // txtInsuranceProvider
             // 
-            txtInsuranceProvider.Location = new Point(182, 49);
+            txtInsuranceProvider.Location = new Point(215, 49);
             txtInsuranceProvider.Name = "txtInsuranceProvider";
             txtInsuranceProvider.Size = new Size(226, 23);
             txtInsuranceProvider.TabIndex = 3;
@@ -584,7 +584,7 @@
             // lblInsuranceProvider
             // 
             lblInsuranceProvider.AutoSize = true;
-            lblInsuranceProvider.Location = new Point(182, 31);
+            lblInsuranceProvider.Location = new Point(215, 31);
             lblInsuranceProvider.Name = "lblInsuranceProvider";
             lblInsuranceProvider.Size = new Size(105, 15);
             lblInsuranceProvider.TabIndex = 2;
@@ -602,9 +602,9 @@
             lblInsuranceID.AutoSize = true;
             lblInsuranceID.Location = new Point(9, 31);
             lblInsuranceID.Name = "lblInsuranceID";
-            lblInsuranceID.Size = new Size(69, 15);
+            lblInsuranceID.Size = new Size(189, 15);
             lblInsuranceID.TabIndex = 0;
-            lblInsuranceID.Text = "InsuranceID";
+            lblInsuranceID.Text = "InsuranceID(Leave blank if adding)";
             // 
             // flpButtons
             // 

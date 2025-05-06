@@ -18,6 +18,9 @@ namespace WUMedCoProject.src
         private readonly int? _patientId;
         private readonly FormMode _mode;
         private bool _hasUnsavedChanges = false;
+        private int _addressId;
+        private int _emergencyContactId;
+        private int? _insuranceId;
 
         public frmPatient(FormMode mode, int? patientId = null)
         {
@@ -108,7 +111,7 @@ namespace WUMedCoProject.src
                 {
                     var query = @"SELECT 
                                     p.PatientID, p.FirstName, p.LastName, p.DateOfBirth, p.Sex, p.SSN, 
-                                    p.PhoneNumber, p.Email,
+                                    p.PhoneNumber, p.Email, p.AddressID, p.EmergencyContactID, p.InsuranceID,
                                     a.StreetAddress, a.ApartmentSuiteNum, a.City, a.State, a.ZipCode,
                                     ec.FirstName AS ECFirstName, ec.LastName AS ECLastName, ec.PhoneNumber AS ECPhone,
                                     i.InsuranceID, i.ProviderName, i.EffectiveDate, i.TerminationDate,
@@ -128,6 +131,10 @@ namespace WUMedCoProject.src
                         {
                             if (reader.Read())
                             {
+                                _addressId = Convert.ToInt32(reader["AddressID"]);
+                                _emergencyContactId = Convert.ToInt32(reader["EmergencyContactID"]);
+                                _insuranceId = reader["InsuranceID"] is DBNull ? null : (int?)reader["InsuranceID"];
+
                                 //Patient Details
                                 txtFirstname.Text = reader["FirstName"].ToString();
                                 txtLastname.Text = reader["LastName"].ToString();
@@ -141,7 +148,8 @@ namespace WUMedCoProject.src
                                 txtStreet.Text = reader["StreetAddress"].ToString();
                                 txtApt.Text = reader["ApartmentSuiteNum"].ToString();
                                 txtCity.Text = reader["City"].ToString();
-                                cboxState.SelectedValue = reader["State"].ToString();
+                                var stateValue = reader["State"].ToString();
+                                cboxState.SelectedItem = stateValue;
                                 txtZip.Text = reader["ZipCode"].ToString();
 
                                 //Emergency Contact Details
@@ -399,6 +407,168 @@ namespace WUMedCoProject.src
         private void UpdateExistingPatient()
         {
             //TODO: Implement update logic for Patient + other related tables
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMEDCo"].ConnectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    //Address
+                    int addressId;
+                    using (var cmd = new SqlCommand(
+                        @"UPDATE Address
+                          SET StreetAddress = @Street, ApartmentSuiteNum = @Apt, City = @City, State = @State, ZipCode = @Zip
+                          WHERE AddressID = @AddressID",
+                          conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
+                        cmd.Parameters.AddWithValue("@Apt", txtApt.Text);
+                        cmd.Parameters.AddWithValue("@City", txtCity.Text);
+                        cmd.Parameters.AddWithValue("@State", cboxState.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Zip", txtZip.Text);
+                        cmd.Parameters.AddWithValue("@AddressID", _addressId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    //Emergency Contact
+                    int emergencyContactId;
+                    using (var cmd = new SqlCommand(
+                        @"UPDATE EmergencyContact
+                          SET FirstName = @ECFirst, LastName = @ECLast, PhoneNumber = @ECPhone
+                          WHERE EmergencyContactID = @ECID",
+                          conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@ECFirst", txtECFirstname.Text);
+                        cmd.Parameters.AddWithValue("@ECLast", txtECLastname.Text);
+                        cmd.Parameters.AddWithValue("@ECPhone", txtECPhoneNum.Text);
+                        cmd.Parameters.AddWithValue("@ECID", _emergencyContactId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    //Insurance
+                    int? newInsuranceId = null;
+                    if (!chkbxNoInsurance.Checked)
+                    {
+                        if (_insuranceId.HasValue)
+                        {
+                            // Update existing PolicyType
+                            using (var cmd = new SqlCommand(
+                                @"UPDATE PolicyType 
+                                  SET TypeName = @Type, Cost = @Cost, Copay = @Copay, CoverageDetails = @Details 
+                                  WHERE PolicyTypeID = (SELECT PolicyTypeID FROM Insurance WHERE InsuranceID = @InsuranceID)",
+                                conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Type", txtInsuranceType.Text);
+                                cmd.Parameters.AddWithValue("@Cost", decimal.Parse(txtCost.Text));
+                                cmd.Parameters.AddWithValue("@Copay", decimal.Parse(txtCopay.Text));
+                                cmd.Parameters.AddWithValue("@Details", txtCoverageDetails.Text);
+                                cmd.Parameters.AddWithValue("@InsuranceID", _insuranceId.Value);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // Update existing Insurance
+                            using (var cmd = new SqlCommand(
+                                @"UPDATE Insurance 
+                                  SET ProviderName = @Provider, EffectiveDate = @EffDate, TerminationDate = @TermDate 
+                                  WHERE InsuranceID = @InsuranceID",
+                                conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Provider", txtInsuranceProvider.Text);
+                                cmd.Parameters.AddWithValue("@EffDate", dtpEffectiveDate.Value);
+                                cmd.Parameters.AddWithValue("@TermDate", chkbxNoTerminationDate.Checked ? (object)DBNull.Value : dtpTerminationDate.Value);
+                                cmd.Parameters.AddWithValue("@InsuranceID", _insuranceId.Value);
+                                cmd.ExecuteNonQuery();
+                            }
+                            newInsuranceId = _insuranceId.Value;
+                        }
+                        else
+                        {
+                            // Create new insurance record
+                            int policyTypeId;
+                            using (var cmd = new SqlCommand(
+                                @"INSERT INTO PolicyType (TypeName, Cost, Copay, CoverageDetails)
+                                  VALUES (@Type, @Cost, @Copay, @Details);
+                                  SELECT SCOPE_IDENTITY();", 
+                                conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Type", txtInsuranceType.Text);
+                                cmd.Parameters.AddWithValue("@Cost", decimal.Parse(txtCost.Text));
+                                cmd.Parameters.AddWithValue("@Copay", decimal.Parse(txtCopay.Text));
+                                cmd.Parameters.AddWithValue("@Details", txtCoverageDetails.Text);
+                                policyTypeId = Convert.ToInt32(cmd.ExecuteScalar());
+                            }
+
+                            using (var cmd = new SqlCommand(
+                                @"INSERT INTO Insurance (ProviderName, EffectiveDate, TerminationDate, PolicyTypeID)
+                                  VALUES (@Provider, @EffDate, @TermDate, @PolicyTypeID);
+                                  SELECT SCOPE_IDENTITY();", 
+                                conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Provider", txtInsuranceProvider.Text);
+                                cmd.Parameters.AddWithValue("@EffDate", dtpEffectiveDate.Value);
+                                cmd.Parameters.AddWithValue("@TermDate", chkbxNoTerminationDate.Checked
+                                    ? (object)DBNull.Value
+                                    : dtpTerminationDate.Value);
+                                cmd.Parameters.AddWithValue("@PolicyTypeID", policyTypeId);
+                                newInsuranceId = Convert.ToInt32(cmd.ExecuteScalar());
+                            }
+                        }
+                    }
+                    else if (_insuranceId.HasValue)
+                    {
+                        // Remove existing insurance
+                        using (var cmd = new SqlCommand(
+                            "DELETE FROM Insurance WHERE InsuranceID = @InsuranceID",
+                            conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@InsuranceID", _insuranceId.Value);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        using (var cmd = new SqlCommand(
+                            "DELETE FROM PolicyType WHERE PolicyTypeID = (SELECT PolicyTypeID FROM Insurance WHERE InsuranceID = @InsuranceID)",
+                            conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@InsuranceID", _insuranceId.Value);
+                            cmd.ExecuteNonQuery();
+                        }
+                        newInsuranceId = null;
+                    }
+
+                    //Patient
+                    using (var cmd = new SqlCommand(
+                        @"UPDATE Patient 
+                          SET FirstName = @First, LastName = @Last, DateOfBirth = @DOB, Sex = @Sex, SSN = @SSN, PhoneNumber = @Phone, Email = @Email, InsuranceID = @InsuranceID 
+                          WHERE PatientID = @PatientID", 
+                        conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@First", txtFirstname.Text);
+                        cmd.Parameters.AddWithValue("@Last", txtLastname.Text);
+                        cmd.Parameters.AddWithValue("@DOB", dtpDateOfBirth.Value);
+                        cmd.Parameters.AddWithValue("@Sex", txtSex.Text);
+                        cmd.Parameters.AddWithValue("@SSN", txtSSN.Text);
+                        cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+                        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+                        cmd.Parameters.AddWithValue("@InsuranceID", newInsuranceId ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@PatientID", _patientId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    MessageBox.Show("Patient updated successfully!", "Success");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error editing patient: {ex.Message}\nAll changes have been rolled back.", "Error");
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         /**********************************************************************
@@ -415,13 +585,16 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void PopulateStateComboBox()
         {
-            cboxState.Items.AddRange(new String[] { "AL", "AK", "AZ", "AR", "CA"
-                , "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN"
-                , "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS"
-                , "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND"
-                , "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT"
-                , "VT", "VA", "WA", "WV", "WI", "WY" });
-            cboxState.SelectedIndex = -1; // Set to no selection
+            var states = new[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC",
+                        "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY",
+                        "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT",
+                        "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
+                        "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT",
+                        "VT", "VA", "WA", "WV", "WI", "WY" };
+
+            cboxState.Items.AddRange(states);
+            cboxState.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cboxState.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
         }
 
         /**********************************************************************
