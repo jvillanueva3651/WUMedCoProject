@@ -16,5 +16,10 @@ namespace WUMedCoProject
         {
             InitializeComponent();
         }
+
+        private void lblDirector_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
