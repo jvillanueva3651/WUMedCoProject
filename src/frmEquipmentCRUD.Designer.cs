@@ -112,6 +112,7 @@
             dgvView.DataPropertyName = "View";
             dgvView.HeaderText = "";
             dgvView.Name = "dgvView";
+            dgvView.UseColumnTextForButtonValue = true;
             dgvView.Width = 75;
             // 
             // dgvEdit
@@ -119,6 +120,7 @@
             dgvEdit.DataPropertyName = "Edit";
             dgvEdit.HeaderText = "";
             dgvEdit.Name = "dgvEdit";
+            dgvEdit.UseColumnTextForButtonValue = true;
             dgvEdit.Width = 75;
             // 
             // dgvDelete
@@ -126,6 +128,7 @@
             dgvDelete.DataPropertyName = "Delete";
             dgvDelete.HeaderText = "";
             dgvDelete.Name = "dgvDelete";
+            dgvDelete.UseColumnTextForButtonValue = true;
             dgvDelete.Width = 75;
             // 
             // frmEquipmentCRUD
@@ -145,6 +148,8 @@
         #endregion
 
         private DataGridView dgvEquipment;
+        private Button btnReturnHome;
+        private Button btnAddNewEquipment;
         private DataGridViewTextBoxColumn dgvEquipmentID;
         private DataGridViewTextBoxColumn dgvBrand;
         private DataGridViewTextBoxColumn dgvModel;
@@ -153,7 +158,5 @@
         private DataGridViewButtonColumn dgvView;
         private DataGridViewButtonColumn dgvEdit;
         private DataGridViewButtonColumn dgvDelete;
-        private Button btnReturnHome;
-        private Button btnAddNewEquipment;
     }
 }
