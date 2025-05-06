@@ -83,7 +83,7 @@ namespace WUMedCoProject.src
         {
             using (var patientForm = new frmPatient(mode, patientId))
             {
-                if(patientForm.ShowDialog() == DialogResult.OK)
+                if (patientForm.ShowDialog() == DialogResult.OK)
                 {
                     LoadPatients(); //Refreshes the DGV
                 }
@@ -121,6 +121,14 @@ namespace WUMedCoProject.src
                     }
                 }
             }
+        }
+
+        /**********************************************************************
+         * Method to handle the return home button click
+         *********************************************************************/
+        private void btnReturnHome_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

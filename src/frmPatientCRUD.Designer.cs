@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             dgvPatients = new DataGridView();
-            btnAddPatient = new Button();
             PatientID = new DataGridViewTextBoxColumn();
             dgvPatientName = new DataGridViewTextBoxColumn();
             dgvDoB = new DataGridViewTextBoxColumn();
@@ -40,6 +39,8 @@
             dgvBtnView = new DataGridViewButtonColumn();
             dgvBtnEdit = new DataGridViewButtonColumn();
             dgvBtnDelete = new DataGridViewButtonColumn();
+            btnAddPatient = new Button();
+            btnReturnHome = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvPatients).BeginInit();
             SuspendLayout();
             // 
@@ -47,22 +48,11 @@
             // 
             dgvPatients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPatients.Columns.AddRange(new DataGridViewColumn[] { PatientID, dgvPatientName, dgvDoB, dgvSex, dgvSSN, dgvPhone, dgvEmail, dgvBtnView, dgvBtnEdit, dgvBtnDelete });
-            dgvPatients.Location = new Point(37, 23);
+            dgvPatients.Location = new Point(12, 12);
             dgvPatients.Name = "dgvPatients";
             dgvPatients.Size = new Size(1143, 550);
             dgvPatients.TabIndex = 0;
             dgvPatients.CellClick += dgvPatients_CellClick;
-            // 
-            // btnAddPatient
-            // 
-            btnAddPatient.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAddPatient.Location = new Point(518, 606);
-            btnAddPatient.Name = "btnAddPatient";
-            btnAddPatient.Size = new Size(182, 41);
-            btnAddPatient.TabIndex = 1;
-            btnAddPatient.Text = "Add a patient";
-            btnAddPatient.UseVisualStyleBackColor = true;
-            btnAddPatient.Click += btnAddPatient_Click;
             // 
             // PatientID
             // 
@@ -130,11 +120,33 @@
             dgvBtnDelete.Text = "Delete";
             dgvBtnDelete.UseColumnTextForButtonValue = true;
             // 
+            // btnAddPatient
+            // 
+            btnAddPatient.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAddPatient.Location = new Point(995, 579);
+            btnAddPatient.Name = "btnAddPatient";
+            btnAddPatient.Size = new Size(160, 27);
+            btnAddPatient.TabIndex = 1;
+            btnAddPatient.Text = "Add a patient";
+            btnAddPatient.UseVisualStyleBackColor = true;
+            btnAddPatient.Click += btnAddPatient_Click;
+            // 
+            // btnReturnHome
+            // 
+            btnReturnHome.Location = new Point(12, 579);
+            btnReturnHome.Name = "btnReturnHome";
+            btnReturnHome.Size = new Size(160, 27);
+            btnReturnHome.TabIndex = 6;
+            btnReturnHome.Text = "Return to Home";
+            btnReturnHome.UseVisualStyleBackColor = true;
+            btnReturnHome.Click += btnReturnHome_Click;
+            // 
             // frmPatientCRUD
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1218, 686);
+            ClientSize = new Size(1171, 617);
+            Controls.Add(btnReturnHome);
             Controls.Add(btnAddPatient);
             Controls.Add(dgvPatients);
             Name = "frmPatientCRUD";
@@ -157,5 +169,6 @@
         private DataGridViewButtonColumn dgvBtnView;
         private DataGridViewButtonColumn dgvBtnEdit;
         private DataGridViewButtonColumn dgvBtnDelete;
+        private Button btnReturnHome;
     }
 }
