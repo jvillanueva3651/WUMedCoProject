@@ -113,22 +113,28 @@ namespace WUMedCoProject.src
             // 
             dgvView.DataPropertyName = "View";
             dgvView.HeaderText = "";
+            dgvView.Text = "View";
             dgvView.Name = "dgvView";
             dgvView.Width = 75;
+            dgvView.UseColumnTextForButtonValue = true;
             // 
             // dgvEdit
             // 
             dgvEdit.DataPropertyName = "Edit";
             dgvEdit.HeaderText = "";
+            dgvEdit.Text = "Edit";
             dgvEdit.Name = "dgvEdit";
             dgvEdit.Width = 75;
+            dgvEdit.UseColumnTextForButtonValue = true;
             // 
             // dgvDelete
             // 
             dgvDelete.DataPropertyName = "Delete";
             dgvDelete.HeaderText = "";
+            dgvDelete.Text = "Delete";
             dgvDelete.Name = "dgvDelete";
             dgvDelete.Width = 75;
+            dgvDelete.UseColumnTextForButtonValue = true;
             // 
             // btnReturnHome
             // 

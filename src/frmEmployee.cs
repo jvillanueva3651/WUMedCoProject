@@ -20,10 +20,9 @@ namespace WUMedCoProject.src
         private readonly FormMode _mode;
         private bool _hasUnsavedChanges = false;
         private int _addressId;
-        private int _departmentId;
-        private int _buildingId;
         private int _selectedDepartmentID = -1;
         private int _selectedBuildingID = -1;
+        private bool _isLoading = false;
 
         public frmEmployee(FormMode mode, int? employeeId = null)
         {
@@ -37,11 +36,37 @@ namespace WUMedCoProject.src
             PopulateBuildingDGV();
 
             InitializeFormBasedOnMode();
-            txtEmployeeID.ReadOnly = true; //Employee ID should ALWAYS be read-only
-            LoadEmployeeData();
+            txtEmployeeID.ReadOnly = true;
+
+            this.Load += frmEmployee_Load;
 
             WireUpChangeEvents(this);
+            dgvDepartment.DataBindingComplete += dgvDepartment_DataBindingComplete;
+            dgvBuilding.DataBindingComplete += dgvBuilding_DataBindingComplete;
             _hasUnsavedChanges = false;
+        }
+
+        private void frmEmployee_Load(object sender, EventArgs e)
+        {
+            _isLoading = true; // Start loading
+            LoadEmployeeData();
+            _isLoading = false; // End loading
+        }
+
+        private void dgvDepartment_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (_mode != FormMode.Add && _selectedDepartmentID != -1)
+            {
+                SelectDepartmentRow(_selectedDepartmentID);
+            }
+        }
+
+        private void dgvBuilding_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (_mode != FormMode.Add && _selectedBuildingID != -1)
+            {
+                SelectBuildingRow(_selectedBuildingID);
+            }
         }
 
         /**********************************************************************
@@ -168,8 +193,6 @@ namespace WUMedCoProject.src
                             // Select rows in DataGridViews after data loads
                             SelectDepartmentRow(_selectedDepartmentID);
                             SelectBuildingRow(_selectedBuildingID);
-
-                            _hasUnsavedChanges = false; // Reset unsaved changes flag
                         }
                     }
                 }
@@ -384,6 +407,7 @@ namespace WUMedCoProject.src
                 {
                     adapter.Fill(dt);
                     dgvDepartment.DataSource = dt;
+                    dgvDepartment.Update();
                     //FormatDepartmentDGV();
                 }
                 catch (SqlException ex)
@@ -411,6 +435,7 @@ namespace WUMedCoProject.src
                 {
                     adapter.Fill(dt);
                     dgvBuilding.DataSource = dt;
+                    dgvBuilding.Update();
                     //FormatBuildingDGV();
                 }
                 catch (SqlException ex)
@@ -713,7 +738,12 @@ namespace WUMedCoProject.src
         {
             foreach (Control ctrl in parent.Controls)
             {
-                if (ctrl is TextBox)
+                if (ctrl is DataGridView dgv)
+                {
+                    ((DataGridView)ctrl).SelectionChanged += OnControlChanged;
+                    continue;
+                }
+                else if (ctrl is TextBox)
                     ((TextBox)ctrl).TextChanged += OnControlChanged;
                 else if (ctrl is ComboBox)
                     ((ComboBox)ctrl).SelectedIndexChanged += OnControlChanged;
@@ -721,8 +751,8 @@ namespace WUMedCoProject.src
                     ((DateTimePicker)ctrl).ValueChanged += OnControlChanged;
                 else if (ctrl is CheckBox)
                     ((CheckBox)ctrl).CheckedChanged += OnControlChanged;
-                else if (ctrl is DataGridView)
-                    ((DataGridView)ctrl).SelectionChanged += OnControlChanged;
+                
+
 
                 // Recurse into nested controls (e.g., GroupBoxes)
                 if (ctrl.HasChildren)
@@ -735,7 +765,10 @@ namespace WUMedCoProject.src
         **********************************************************************/
         private void OnControlChanged(object sender, EventArgs e)
         {
-            _hasUnsavedChanges = true;
+            if (!_isLoading)
+            {
+                _hasUnsavedChanges = true;
+            }
         }
 
         /**********************************************************************
@@ -805,5 +838,7 @@ namespace WUMedCoProject.src
             txtBuildingSearch.Clear();
             LoadFilteredData("", dgvBuilding, "Building", "Name");
         }
+
+        
     }
 }

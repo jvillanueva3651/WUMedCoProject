@@ -503,6 +503,7 @@
             dgvDepartment.Name = "dgvDepartment";
             dgvDepartment.Size = new Size(433, 160);
             dgvDepartment.TabIndex = 0;
+            dgvDepartment.DataBindingComplete += dgvDepartment_DataBindingComplete;
             // 
             // gbBuilding
             // 
@@ -563,6 +564,7 @@
             dgvBuilding.Name = "dgvBuilding";
             dgvBuilding.Size = new Size(433, 159);
             dgvBuilding.TabIndex = 0;
+            dgvBuilding.DataBindingComplete += dgvBuilding_DataBindingComplete;
             // 
             // flpButtons
             // 
