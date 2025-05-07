@@ -45,6 +45,9 @@
             btnSearch = new Button();
             txtSearch = new TextBox();
             dgvEmployees = new DataGridView();
+            dgvEmployeeID = new DataGridViewTextBoxColumn();
+            dgvFirstName = new DataGridViewTextBoxColumn();
+            dgvLastName = new DataGridViewTextBoxColumn();
             txtName = new TextBox();
             dtpDateOpened = new DateTimePicker();
             txtAssignedFunction = new TextBox();
@@ -52,9 +55,6 @@
             lblDirector = new Label();
             lblAssignedFunction = new Label();
             lblDateOpened = new Label();
-            dgvEmployeeID = new DataGridViewTextBoxColumn();
-            dgvFirstName = new DataGridViewTextBoxColumn();
-            dgvLastName = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).BeginInit();
             SuspendLayout();
             // 
@@ -147,6 +147,7 @@
             btnSave.TabIndex = 39;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnExit
             // 
@@ -156,6 +157,7 @@
             btnExit.TabIndex = 38;
             btnExit.Text = "Exit";
             btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
             // 
             // btnClearSelection
             // 
@@ -165,6 +167,7 @@
             btnClearSelection.TabIndex = 37;
             btnClearSelection.Text = "Clear Building Director";
             btnClearSelection.UseVisualStyleBackColor = true;
+            btnClearSelection.Click += btnClearSelection_Click;
             // 
             // btnClearSearch
             // 
@@ -174,6 +177,7 @@
             btnClearSearch.TabIndex = 36;
             btnClearSearch.Text = "Clear";
             btnClearSearch.UseVisualStyleBackColor = true;
+            btnClearSearch.Click += btnClearSearch_Click;
             // 
             // btnSearch
             // 
@@ -183,6 +187,7 @@
             btnSearch.TabIndex = 35;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
             // txtSearch
             // 
@@ -200,6 +205,27 @@
             dgvEmployees.Name = "dgvEmployees";
             dgvEmployees.Size = new Size(453, 249);
             dgvEmployees.TabIndex = 33;
+            // 
+            // dgvEmployeeID
+            // 
+            dgvEmployeeID.DataPropertyName = "EmployeeID";
+            dgvEmployeeID.HeaderText = "Employee ID";
+            dgvEmployeeID.Name = "dgvEmployeeID";
+            dgvEmployeeID.Width = 80;
+            // 
+            // dgvFirstName
+            // 
+            dgvFirstName.DataPropertyName = "FirstName";
+            dgvFirstName.HeaderText = "First Name";
+            dgvFirstName.Name = "dgvFirstName";
+            dgvFirstName.Width = 165;
+            // 
+            // dgvLastName
+            // 
+            dgvLastName.DataPropertyName = "LastName";
+            dgvLastName.HeaderText = "Last Name";
+            dgvLastName.Name = "dgvLastName";
+            dgvLastName.Width = 165;
             // 
             // txtName
             // 
@@ -257,27 +283,6 @@
             lblDateOpened.Size = new Size(76, 15);
             lblDateOpened.TabIndex = 26;
             lblDateOpened.Text = "Date Opened";
-            // 
-            // dgvEmployeeID
-            // 
-            dgvEmployeeID.DataPropertyName = "EmployeeID";
-            dgvEmployeeID.HeaderText = "Employee ID";
-            dgvEmployeeID.Name = "dgvEmployeeID";
-            dgvEmployeeID.Width = 80;
-            // 
-            // dgvFirstName
-            // 
-            dgvFirstName.DataPropertyName = "FirstName";
-            dgvFirstName.HeaderText = "First Name";
-            dgvFirstName.Name = "dgvFirstName";
-            dgvFirstName.Width = 165;
-            // 
-            // dgvLastName
-            // 
-            dgvLastName.DataPropertyName = "LastName";
-            dgvLastName.HeaderText = "Last Name";
-            dgvLastName.Name = "dgvLastName";
-            dgvLastName.Width = 165;
             // 
             // frmBuilding
             // 
