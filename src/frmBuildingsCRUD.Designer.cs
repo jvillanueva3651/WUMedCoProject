@@ -69,6 +69,7 @@
             dgvBuildings.Name = "dgvBuildings";
             dgvBuildings.Size = new Size(895, 393);
             dgvBuildings.TabIndex = 3;
+            dgvBuildings.CellClick += dgvBuildings_CellClick;
             // 
             // dgvBuildingID
             // 

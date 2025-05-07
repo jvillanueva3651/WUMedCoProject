@@ -68,13 +68,13 @@ namespace WUMedCoProject
         /**********************************************************************
          * Method to handle the edit, view, delete buttons in the DataGridView
          *********************************************************************/
-        private void dgvPatients_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvBuildings_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
             var dataTable = (DataTable)dgvBuildings.DataSource;
 
-            var buildingId = Convert.ToInt32(dataTable.Rows[e.RowIndex]["dgvBuildingID"]);
+            var buildingId = Convert.ToInt32(dataTable.Rows[e.RowIndex]["BuildingID"]);
 
             //For Debugging
             //MessageBox.Show($"BuildingID: {buildingId}");
@@ -86,6 +86,28 @@ namespace WUMedCoProject
             else if (dgvBuildings.Columns[e.ColumnIndex] == dgvBtnEdit)
             {
                 OpenBuildingForm(frmBuilding.FormMode.Edit, buildingId);
+            }
+            else if (dgvBuildings.Columns[e.ColumnIndex] == dgvViewRoomsBtn)
+            {
+                //Open the room form for viewing rooms in the selected building
+                using (var roomForm = new frmRooms(buildingId))
+                {
+                    if (roomForm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadBuildings(); //Refreshes the DGV
+                    }
+                }
+            }
+            else if (dgvBuildings.Columns[e.ColumnIndex] == dgvAddRoomBtn)
+            {
+                //Open the room form for adding a new room
+                using (var roomForm = new frmAddRoom(buildingId))
+                {
+                    if (roomForm.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadBuildings(); //Refreshes the DGV
+                    }
+                }
             }
         }
 
@@ -102,5 +124,6 @@ namespace WUMedCoProject
                 }
             }
         }
+
     }
 }
