@@ -71,16 +71,12 @@
             txtDeptSearch = new TextBox();
             lblDeptSearch = new Label();
             dgvDepartment = new DataGridView();
-            dgvDepartmentID = new DataGridViewTextBoxColumn();
-            dgvDepartmentName = new DataGridViewTextBoxColumn();
             gbBuilding = new GroupBox();
             btnClearBuildingSearch = new Button();
             btnBuildingSearch = new Button();
             txtBuildingSearch = new TextBox();
             lblBuildingSearch = new Label();
             dgvBuilding = new DataGridView();
-            dgvBuildingID = new DataGridViewTextBoxColumn();
-            dgvBuildingName = new DataGridViewTextBoxColumn();
             flpButtons = new FlowLayoutPanel();
             btnSave = new Button();
             btnExit = new Button();
@@ -503,26 +499,10 @@
             // dgvDepartment
             // 
             dgvDepartment.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDepartment.Columns.AddRange(new DataGridViewColumn[] { dgvDepartmentID, dgvDepartmentName });
             dgvDepartment.Location = new Point(9, 22);
             dgvDepartment.Name = "dgvDepartment";
             dgvDepartment.Size = new Size(433, 160);
             dgvDepartment.TabIndex = 0;
-            // 
-            // dgvDepartmentID
-            // 
-            dgvDepartmentID.DataPropertyName = "dgvDepartmentID";
-            dgvDepartmentID.HeaderText = "DepartmentID";
-            dgvDepartmentID.Name = "dgvDepartmentID";
-            dgvDepartmentID.ReadOnly = true;
-            // 
-            // dgvDepartmentName
-            // 
-            dgvDepartmentName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvDepartmentName.DataPropertyName = "dgvDepartmentName";
-            dgvDepartmentName.HeaderText = "Department";
-            dgvDepartmentName.Name = "dgvDepartmentName";
-            dgvDepartmentName.ReadOnly = true;
             // 
             // gbBuilding
             // 
@@ -579,26 +559,10 @@
             // dgvBuilding
             // 
             dgvBuilding.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBuilding.Columns.AddRange(new DataGridViewColumn[] { dgvBuildingID, dgvBuildingName });
             dgvBuilding.Location = new Point(9, 22);
             dgvBuilding.Name = "dgvBuilding";
             dgvBuilding.Size = new Size(433, 159);
             dgvBuilding.TabIndex = 0;
-            // 
-            // dgvBuildingID
-            // 
-            dgvBuildingID.DataPropertyName = "dgvBuildingID";
-            dgvBuildingID.HeaderText = "BuildingID";
-            dgvBuildingID.Name = "dgvBuildingID";
-            dgvBuildingID.ReadOnly = true;
-            // 
-            // dgvBuildingName
-            // 
-            dgvBuildingName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvBuildingName.DataPropertyName = "dgvBuildingName";
-            dgvBuildingName.HeaderText = "Building";
-            dgvBuildingName.Name = "dgvBuildingName";
-            dgvBuildingName.ReadOnly = true;
             // 
             // flpButtons
             // 
@@ -710,9 +674,5 @@
         private Button btnDeptSearch;
         private Button btnClearBuildingSearch;
         private Button btnBuildingSearch;
-        private DataGridViewTextBoxColumn dgvDepartmentID;
-        private DataGridViewTextBoxColumn dgvDepartmentName;
-        private DataGridViewTextBoxColumn dgvBuildingID;
-        private DataGridViewTextBoxColumn dgvBuildingName;
     }
 }

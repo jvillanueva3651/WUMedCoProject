@@ -31,17 +31,17 @@ namespace WUMedCoProject.src
             _mode = mode;
             _employeeId = employeeId;
             PopulateStateComboBox();
+            FormatDepartmentDGV();
+            FormatBuildingDGV();
             PopulateDepartmentDGV();
             PopulateBuildingDGV();
-
-            if (_mode == FormMode.Add)
-                _hasUnsavedChanges = false;
 
             InitializeFormBasedOnMode();
             txtEmployeeID.ReadOnly = true; //Employee ID should ALWAYS be read-only
             LoadEmployeeData();
 
             WireUpChangeEvents(this);
+            _hasUnsavedChanges = false;
         }
 
         /**********************************************************************
@@ -162,6 +162,14 @@ namespace WUMedCoProject.src
                             // Department/Building Selection
                             _selectedDepartmentID = (int)reader["DepartmentID"];
                             _selectedBuildingID = (int)reader["BuildingID"];
+
+                            MessageBox.Show("DepartmentID: " + _selectedDepartmentID.ToString() + "\nBuildingID: " + _selectedBuildingID.ToString(), "Debug Info");
+
+                            // Select rows in DataGridViews after data loads
+                            SelectDepartmentRow(_selectedDepartmentID);
+                            SelectBuildingRow(_selectedBuildingID);
+
+                            _hasUnsavedChanges = false; // Reset unsaved changes flag
                         }
                     }
                 }
@@ -174,12 +182,6 @@ namespace WUMedCoProject.src
                     conn.Close();
                 }
             }
-
-            // Select rows in DataGridViews after data loads
-            SelectDepartmentRow(_selectedDepartmentID);
-            SelectBuildingRow(_selectedBuildingID);
-
-            _hasUnsavedChanges = false; // Reset unsaved changes flag
         }
 
         /**********************************************************************
@@ -220,7 +222,7 @@ namespace WUMedCoProject.src
             if (dgvDepartment.SelectedRows.Count == 0)
                 throw new Exception("Please select a department");
 
-            return Convert.ToInt32(dgvDepartment.SelectedRows[0].Cells["dgvDepartmentID"].Value);
+            return Convert.ToInt32(dgvDepartment.SelectedRows[0].Cells["DepartmentID"].Value);
         }
 
         /**********************************************************************
@@ -231,7 +233,7 @@ namespace WUMedCoProject.src
             if (dgvBuilding.SelectedRows.Count == 0)
                 throw new Exception("Please select a building");
 
-            return Convert.ToInt32(dgvBuilding.SelectedRows[0].Cells["dgvBuildingID"].Value);
+            return Convert.ToInt32(dgvBuilding.SelectedRows[0].Cells["BuildingID"].Value);
         }
 
         /**********************************************************************
@@ -382,7 +384,7 @@ namespace WUMedCoProject.src
                 {
                     adapter.Fill(dt);
                     dgvDepartment.DataSource = dt;
-                    FormatDepartmentDGV();
+                    //FormatDepartmentDGV();
                 }
                 catch (SqlException ex)
                 {
@@ -409,7 +411,7 @@ namespace WUMedCoProject.src
                 {
                     adapter.Fill(dt);
                     dgvBuilding.DataSource = dt;
-                    FormatBuildingDGV();
+                    //FormatBuildingDGV();
                 }
                 catch (SqlException ex)
                 {
@@ -429,20 +431,19 @@ namespace WUMedCoProject.src
             // ID Column
             dgvDepartment.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "DepartmentID",
+                Name = "dgvDepartmentID", // Actual column name
+                DataPropertyName = "DepartmentID", // Maps to SQL column
                 HeaderText = "ID",
-                Width = 50,
-                ReadOnly = true,
                 Visible = false
             });
 
             // Name Column
             dgvDepartment.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "DepartmentName",
-                HeaderText = "Department Name",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                ReadOnly = true
+                Name = "dgvDepartmentName", // Actual column name
+                DataPropertyName = "DepartmentName", // Maps to SQL column
+                HeaderText = "Department",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
         }
 
@@ -457,21 +458,19 @@ namespace WUMedCoProject.src
             // ID Column
             dgvBuilding.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "BuildingID",
+                Name = "dgvBuildingID", // Actual column name
+                DataPropertyName = "BuildingID", // Maps to SQL column
                 HeaderText = "ID",
-                Width = 50,
-                ReadOnly = true,
                 Visible = false
             });
 
             // Name Column
             dgvBuilding.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "Name",
-                HeaderText = "Building Name",
-                Width = 200,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                ReadOnly = true
+                Name = "dgvBuildingName", // Actual column name
+                DataPropertyName = "Name", // Maps to SQL column
+                HeaderText = "Building",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
         }
 
