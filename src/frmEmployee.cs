@@ -188,7 +188,8 @@ namespace WUMedCoProject.src
                             _selectedDepartmentID = (int)reader["DepartmentID"];
                             _selectedBuildingID = (int)reader["BuildingID"];
 
-                            MessageBox.Show("DepartmentID: " + _selectedDepartmentID.ToString() + "\nBuildingID: " + _selectedBuildingID.ToString(), "Debug Info");
+                            // For Debugging
+                            //MessageBox.Show("DepartmentID: " + _selectedDepartmentID.ToString() + "\nBuildingID: " + _selectedBuildingID.ToString(), "Debug Info");
 
                             // Select rows in DataGridViews after data loads
                             SelectDepartmentRow(_selectedDepartmentID);
