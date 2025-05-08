@@ -29,68 +29,29 @@
         private void InitializeComponent()
         {
             dgvDepartments = new DataGridView();
+            btnAddNewDepartment = new Button();
+            btnReturnHome = new Button();
             dgvDepartmentID = new DataGridViewTextBoxColumn();
             dgvDepartmentName = new DataGridViewTextBoxColumn();
             dgvHeadOfDepartment = new DataGridViewTextBoxColumn();
-            dgvBtnEdit = new DataGridViewButtonColumn();
-            dgvBtnDelete = new DataGridViewButtonColumn();
-            btnAddNewDepartment = new Button();
-            btnReturnHome = new Button();
+            BtnView = new DataGridViewButtonColumn();
+            BtnEdit = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dgvDepartments).BeginInit();
             SuspendLayout();
             // 
             // dgvDepartments
             // 
             dgvDepartments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDepartments.Columns.AddRange(new DataGridViewColumn[] { dgvDepartmentID, dgvDepartmentName, dgvHeadOfDepartment, dgvBtnEdit, dgvBtnDelete });
+            dgvDepartments.Columns.AddRange(new DataGridViewColumn[] { dgvDepartmentID, dgvDepartmentName, dgvHeadOfDepartment, BtnView, BtnEdit });
             dgvDepartments.Location = new Point(12, 12);
             dgvDepartments.Name = "dgvDepartments";
-            dgvDepartments.Size = new Size(776, 393);
+            dgvDepartments.Size = new Size(707, 393);
             dgvDepartments.TabIndex = 0;
             dgvDepartments.CellClick += dgvDepartments_CellClick;
             // 
-            // dgvDepartmentID
-            // 
-            dgvDepartmentID.DataPropertyName = "dgvDepartmentID";
-            dgvDepartmentID.HeaderText = "DepartmentID";
-            dgvDepartmentID.Name = "dgvDepartmentID";
-            dgvDepartmentID.ReadOnly = true;
-            // 
-            // dgvDepartmentName
-            // 
-            dgvDepartmentName.DataPropertyName = "dgvDepartmentName";
-            dgvDepartmentName.HeaderText = "Department";
-            dgvDepartmentName.Name = "dgvDepartmentName";
-            dgvDepartmentName.ReadOnly = true;
-            dgvDepartmentName.Width = 254;
-            // 
-            // dgvHeadOfDepartment
-            // 
-            dgvHeadOfDepartment.DataPropertyName = "dgvHeadOfDepartment";
-            dgvHeadOfDepartment.HeaderText = "Department Head";
-            dgvHeadOfDepartment.Name = "dgvHeadOfDepartment";
-            dgvHeadOfDepartment.ReadOnly = true;
-            dgvHeadOfDepartment.Width = 250;
-            // 
-            // dgvBtnEdit
-            // 
-            dgvBtnEdit.DataPropertyName = "dgvBtnEdit";
-            dgvBtnEdit.HeaderText = "";
-            dgvBtnEdit.Name = "dgvBtnEdit";
-            dgvBtnEdit.UseColumnTextForButtonValue = true;
-            dgvBtnEdit.Width = 65;
-            // 
-            // dgvBtnDelete
-            // 
-            dgvBtnDelete.DataPropertyName = "dgvButtonDelete";
-            dgvBtnDelete.HeaderText = "";
-            dgvBtnDelete.Name = "dgvBtnDelete";
-            dgvBtnDelete.UseColumnTextForButtonValue = true;
-            dgvBtnDelete.Width = 65;
-            // 
             // btnAddNewDepartment
             // 
-            btnAddNewDepartment.Location = new Point(628, 411);
+            btnAddNewDepartment.Location = new Point(559, 411);
             btnAddNewDepartment.Name = "btnAddNewDepartment";
             btnAddNewDepartment.Size = new Size(160, 27);
             btnAddNewDepartment.TabIndex = 1;
@@ -108,11 +69,53 @@
             btnReturnHome.UseVisualStyleBackColor = true;
             btnReturnHome.Click += btnReturnHome_Click;
             // 
+            // dgvDepartmentID
+            // 
+            dgvDepartmentID.DataPropertyName = "DepartmentID";
+            dgvDepartmentID.HeaderText = "DepartmentID";
+            dgvDepartmentID.Name = "DepartmentID";
+            dgvDepartmentID.ReadOnly = true;
+            dgvDepartmentID.Visible = false;
+            // 
+            // dgvDepartmentName
+            // 
+            dgvDepartmentName.DataPropertyName = "DepartmentName";
+            dgvDepartmentName.HeaderText = "Department";
+            dgvDepartmentName.Name = "DepartmentName";
+            dgvDepartmentName.ReadOnly = true;
+            dgvDepartmentName.Width = 254;
+            // 
+            // dgvHeadOfDepartment
+            // 
+            dgvHeadOfDepartment.DataPropertyName = "HeadOfDepartment";
+            dgvHeadOfDepartment.HeaderText = "Department Head";
+            dgvHeadOfDepartment.Name = "HeadOfDepartment";
+            dgvHeadOfDepartment.ReadOnly = true;
+            dgvHeadOfDepartment.Width = 250;
+            // 
+            // BtnView
+            // 
+            BtnView.DataPropertyName = "BtnView";
+            BtnView.HeaderText = "";
+            BtnView.Name = "BtnView";
+            BtnView.Text = "View";
+            BtnView.UseColumnTextForButtonValue = true;
+            BtnView.Width = 80;
+            // 
+            // BtnEdit
+            // 
+            BtnEdit.DataPropertyName = "BtnEdit";
+            BtnEdit.HeaderText = "";
+            BtnEdit.Name = "BtnEdit";
+            BtnEdit.Text = "Edit";
+            BtnEdit.UseColumnTextForButtonValue = true;
+            BtnEdit.Width = 80;
+            // 
             // frmDepartmentsCRUD
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(731, 450);
             Controls.Add(btnReturnHome);
             Controls.Add(btnAddNewDepartment);
             Controls.Add(dgvDepartments);
@@ -130,7 +133,7 @@
         private DataGridViewTextBoxColumn dgvDepartmentID;
         private DataGridViewTextBoxColumn dgvDepartmentName;
         private DataGridViewTextBoxColumn dgvHeadOfDepartment;
-        private DataGridViewButtonColumn dgvBtnEdit;
-        private DataGridViewButtonColumn dgvBtnDelete;
+        private DataGridViewButtonColumn BtnView;
+        private DataGridViewButtonColumn BtnEdit;
     }
 }

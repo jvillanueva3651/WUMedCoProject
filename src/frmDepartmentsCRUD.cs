@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +18,34 @@ namespace WUMedCoProject
         public frmDepartmentsCRUD()
         {
             InitializeComponent();
+            LoadDepartments();
+        }
+
+        /**********************************************************************
+         * Method to load departments into the DataGridView
+         *********************************************************************/
+        private void LoadDepartments()
+        {
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+            {
+                var query = @"
+                    SELECT 
+                        d.DepartmentID, 
+                        d.DepartmentName,
+                        CASE 
+                            WHEN d.HeadOfDepartmentID IS NULL THEN '[No Head Assigned]'
+                            ELSE e.LastName + ', ' + e.FirstName 
+                        END AS HeadOfDepartment
+                    FROM Department d
+                    LEFT JOIN Employee e ON d.HeadOfDepartmentID = e.EmployeeID";
+
+                var adapter = new SqlDataAdapter(query, conn);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+
+                dgvDepartments.DataSource = dt;
+                dgvDepartments.Columns["DepartmentID"].Visible = false; // Hide ID column
+            }
         }
 
         /**********************************************************************
@@ -31,7 +61,7 @@ namespace WUMedCoProject
          *********************************************************************/
         private void btnAddNewDepartment_Click(object sender, EventArgs e)
         {
-            OpenDepartmentForm();
+            OpenDepartmentForm(frmDepartment.FormMode.Add);
         }
 
         /**********************************************************************
@@ -48,30 +78,28 @@ namespace WUMedCoProject
             //For Debugging
             //MessageBox.Show($"DepartmentID: {departmentId}");
 
-            if (dgvDepartments.Columns[e.ColumnIndex] == dgvBtnEdit)
+            if (dgvDepartments.Columns[e.ColumnIndex] == BtnEdit)
             {
-                OpenDepartmentForm();
+                OpenDepartmentForm(frmDepartment.FormMode.Edit, departmentId);
             }
-            else if (dgvDepartments.Columns[e.ColumnIndex] == dgvBtnDelete)
+            else if (dgvDepartments.Columns[e.ColumnIndex] == BtnView)
             {
-                DeleteDepartment(departmentId);
+                OpenDepartmentForm(frmDepartment.FormMode.View, departmentId);
             }
-        }
-
-        /**********************************************************************
-         * Method to delete a department from the database
-         *********************************************************************/
-        private void DeleteDepartment(int departmentId)
-        {
-            //TODO: Add deletion logic
         }
 
         /**********************************************************************
          * Method to open the department form
          *********************************************************************/
-        private void OpenDepartmentForm()
+        private void OpenDepartmentForm(frmDepartment.FormMode mode, int? departmentId = null)
         {
-            //TODO: Add logic to open form
+            using (var departmentForm = new frmDepartment(mode, departmentId))
+            {
+                if (departmentForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDepartments(); // Refresh DataGridView
+                }
+            }
         }
     }
 }
