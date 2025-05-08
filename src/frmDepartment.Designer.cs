@@ -57,6 +57,7 @@ namespace WUMedCoProject.src
             // 
             // btnSave
             // 
+            btnSave.DialogResult = DialogResult.OK;
             btnSave.Location = new Point(252, 407);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(83, 31);
