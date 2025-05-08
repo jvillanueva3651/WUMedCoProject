@@ -154,7 +154,7 @@ namespace WUMedCoProject.src
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show($"Error loading employee data: {ex.Message}", "Database Error");
+                    MessageBox.Show($"Error loading building data: {ex.Message}", "Database Error");
                 }
                 finally
                 {
