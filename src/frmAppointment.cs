@@ -19,23 +19,31 @@ namespace WUMedCoProject.src
         private readonly int? _appointmentId;
         private readonly FormMode _mode;
         private bool _hasUnsavedChanges = false;
+        private int _selectedPatientId = -1;
+        private int _selectedPhysicianId = -1;
+        private int _selectedRoomId = -1;
 
         public frmAppointment(FormMode mode, int? appointmentId = null)
         {
             InitializeComponent();
             _mode = mode;
             _appointmentId = appointmentId;
+            LoadPatients();
+            LoadPhysicians();
+            LoadRooms();
 
             if (_mode == FormMode.Add)
                 _hasUnsavedChanges = false;
 
             InitializeFormBasedOnMode();
             LoadAppointmentData();
-            LoadPatients();
-            LoadPhysicians();
-            LoadRooms();
+
+            dgvPatient.DataBindingComplete += dgvPatient_DataBindingComplete;
+            dgvEmployees.DataBindingComplete += dgvEmployees_DataBindingComplete;
+            dgvRoom.DataBindingComplete += dgvRoom_DataBindingComplete;
 
             WireUpChangeEvents(this);
+
         }
 
         /**********************************************************************
@@ -160,7 +168,11 @@ namespace WUMedCoProject.src
                     if (reader.Read())
                     {
                         //For debugging
-                        MessageBox.Show($"AppointmentID: {_appointmentId}");
+                        //MessageBox.Show($"AppointmentID: {_appointmentId}");
+
+                        _selectedPatientId = Convert.ToInt32(reader["PatientID"]);
+                        _selectedPhysicianId = Convert.ToInt32(reader["PhysicianID"]);
+                        _selectedRoomId = Convert.ToInt32(reader["RoomID"]);
 
                         // Populate basic fields
                         dtpScheduled.Value = (DateTime)reader["DateTime"];
@@ -188,7 +200,15 @@ namespace WUMedCoProject.src
         {
             foreach (DataGridViewRow row in dgv.Rows)
             {
-                if (row.Cells[idColumnName].Value.ToString() == idValue.ToString())
+                // Check if the cell exists and has a value
+                if (row.Cells[idColumnName]?.Value == null)
+                    continue;
+
+                // Safely convert both values to strings
+                string cellValue = Convert.ToString(row.Cells[idColumnName].Value);
+                string targetValue = Convert.ToString(idValue);
+
+                if (cellValue == targetValue)
                 {
                     row.Selected = true;
                     break;
@@ -412,6 +432,33 @@ namespace WUMedCoProject.src
         {
             txtSearchEmployee.Clear();
             LoadPhysicians();
+        }
+
+        private void dgvPatient_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (_selectedPatientId != -1)
+            {
+                SelectRowInDGV(dgvPatient, "PatientID", _selectedPatientId);
+                _selectedPatientId = -1; // Reset after selection
+            }
+        }
+
+        private void dgvEmployees_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (_selectedPhysicianId != -1)
+            {
+                SelectRowInDGV(dgvEmployees, "EmployeeID", _selectedPhysicianId);
+                _selectedPhysicianId = -1;
+            }
+        }
+
+        private void dgvRoom_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (_selectedRoomId != -1)
+            {
+                SelectRowInDGV(dgvRoom, "RoomID", _selectedRoomId);
+                _selectedRoomId = -1;
+            }
         }
     }
 }

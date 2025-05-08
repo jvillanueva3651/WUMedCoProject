@@ -160,7 +160,7 @@ namespace WUMedCoProject.src
                             //TODO: Populate Employees DataGridView
                             if (reader["HeadOfDepartmentID"] != DBNull.Value)
                             {
-                                _selectedEmployeeId = Convert.ToInt32(reader["DirectorID"]);
+                                _selectedEmployeeId = Convert.ToInt32(reader["HeadOfDepartmentID"]);
                                 SelectHeadOfDepartmentRow(_selectedEmployeeId);
                             }
 

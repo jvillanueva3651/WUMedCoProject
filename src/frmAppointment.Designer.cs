@@ -49,7 +49,7 @@ namespace WUMedCoProject.src
             btnSearchEmployee = new Button();
             txtSearchEmployee = new TextBox();
             dgvEmployees = new DataGridView();
-            dgvEmployeeID = new DataGridViewTextBoxColumn();
+            EmployeeID = new DataGridViewTextBoxColumn();
             dgvFirstName = new DataGridViewTextBoxColumn();
             dgvLastName = new DataGridViewTextBoxColumn();
             btnClearPatientSearch = new Button();
@@ -132,6 +132,7 @@ namespace WUMedCoProject.src
             dgvPatient.Name = "dgvPatient";
             dgvPatient.Size = new Size(247, 150);
             dgvPatient.TabIndex = 7;
+            dgvPatient.DataBindingComplete += dgvPatient_DataBindingComplete;
             // 
             // PatientID
             // 
@@ -143,6 +144,7 @@ namespace WUMedCoProject.src
             // 
             // FirstName
             // 
+            FirstName.DataPropertyName = "FirstName";
             FirstName.HeaderText = "First Name";
             FirstName.Name = "FirstName";
             FirstName.ReadOnly = true;
@@ -150,6 +152,7 @@ namespace WUMedCoProject.src
             // LastName
             // 
             LastName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            LastName.DataPropertyName = "LastName";
             LastName.HeaderText = "Last Name";
             LastName.Name = "LastName";
             LastName.ReadOnly = true;
@@ -162,6 +165,7 @@ namespace WUMedCoProject.src
             dgvRoom.Name = "dgvRoom";
             dgvRoom.Size = new Size(209, 186);
             dgvRoom.TabIndex = 8;
+            dgvRoom.DataBindingComplete += dgvRoom_DataBindingComplete;
             // 
             // RoomID
             // 
@@ -181,6 +185,7 @@ namespace WUMedCoProject.src
             // 
             // RoomType
             // 
+            RoomType.DataPropertyName = "RoomType";
             RoomType.HeaderText = "Room";
             RoomType.Name = "RoomType";
             RoomType.Width = 65;
@@ -216,19 +221,20 @@ namespace WUMedCoProject.src
             // dgvEmployees
             // 
             dgvEmployees.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEmployees.Columns.AddRange(new DataGridViewColumn[] { dgvEmployeeID, dgvFirstName, dgvLastName });
+            dgvEmployees.Columns.AddRange(new DataGridViewColumn[] { EmployeeID, dgvFirstName, dgvLastName });
             dgvEmployees.Location = new Point(265, 261);
             dgvEmployees.Name = "dgvEmployees";
             dgvEmployees.Size = new Size(276, 150);
             dgvEmployees.TabIndex = 37;
+            dgvEmployees.DataBindingComplete += dgvEmployees_DataBindingComplete;
             // 
-            // dgvEmployeeID
+            // EmployeeID
             // 
-            dgvEmployeeID.DataPropertyName = "EmployeeID";
-            dgvEmployeeID.HeaderText = "Employee ID";
-            dgvEmployeeID.Name = "dgvEmployeeID";
-            dgvEmployeeID.Visible = false;
-            dgvEmployeeID.Width = 80;
+            EmployeeID.DataPropertyName = "EmployeeID";
+            EmployeeID.HeaderText = "Employee ID";
+            EmployeeID.Name = "EmployeeID";
+            EmployeeID.Visible = false;
+            EmployeeID.Width = 80;
             // 
             // dgvFirstName
             // 
@@ -349,20 +355,20 @@ namespace WUMedCoProject.src
         private Button btnSearchEmployee;
         private TextBox txtSearchEmployee;
         private DataGridView dgvEmployees;
-        private DataGridViewTextBoxColumn dgvEmployeeID;
-        private DataGridViewTextBoxColumn dgvFirstName;
-        private DataGridViewTextBoxColumn dgvLastName;
-        private DataGridViewTextBoxColumn PatientID;
-        private DataGridViewTextBoxColumn FirstName;
-        private DataGridViewTextBoxColumn LastName;
         private Button btnClearPatientSearch;
         private Button btnSearchPatient;
         private TextBox txtSearchPatient;
         private FlowLayoutPanel flpButtons;
         private Button btnSave;
         private Button btnCancel;
+        private DataGridViewTextBoxColumn PatientID;
+        private DataGridViewTextBoxColumn FirstName;
+        private DataGridViewTextBoxColumn LastName;
         private DataGridViewTextBoxColumn RoomID;
         private DataGridViewTextBoxColumn Building;
         private DataGridViewTextBoxColumn RoomType;
+        private DataGridViewTextBoxColumn EmployeeID;
+        private DataGridViewTextBoxColumn dgvFirstName;
+        private DataGridViewTextBoxColumn dgvLastName;
     }
 }
