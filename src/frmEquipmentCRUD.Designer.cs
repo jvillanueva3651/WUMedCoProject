@@ -1,162 +1,199 @@
-﻿namespace WUMedCoProject
+﻿namespace WUMedCoProject.src
 {
     partial class frmEquipmentCRUD
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private DataGridView dgvEquipment;
+        /*
+        private DataGridViewTextBoxColumn EquipmentID;
+        private DataGridViewTextBoxColumn dgvType;
+        private DataGridViewTextBoxColumn dgvBrand;
+        private DataGridViewTextBoxColumn dgvModel;
+        private DataGridViewTextBoxColumn dgvSerial;
+        private DataGridViewTextBoxColumn dgvCost;
+        private DataGridViewTextBoxColumn dgvAcquisitionDate;
+        private DataGridViewTextBoxColumn dgvLastMaintenance;
+        private DataGridViewTextBoxColumn dgvStatus;
+        private DataGridViewTextBoxColumn dgvRoom;
+        */
+        private DataGridViewButtonColumn dgvBtnView;
+        private DataGridViewButtonColumn dgvBtnEdit;
+        private DataGridViewButtonColumn dgvBtnDelete;
+        private Button btnAddEquipment;
+        private Button btnReturnHome;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             dgvEquipment = new DataGridView();
-            btnReturnHome = new Button();
-            btnAddNewEquipment = new Button();
-            dgvEquipmentID = new DataGridViewTextBoxColumn();
+            /*
+            EquipmentID = new DataGridViewTextBoxColumn();
+            dgvType = new DataGridViewTextBoxColumn();
             dgvBrand = new DataGridViewTextBoxColumn();
             dgvModel = new DataGridViewTextBoxColumn();
-            dgvSerialNumber = new DataGridViewTextBoxColumn();
-            dgvLastMaintenanceDate = new DataGridViewTextBoxColumn();
-            dgvView = new DataGridViewButtonColumn();
-            dgvEdit = new DataGridViewButtonColumn();
-            dgvDelete = new DataGridViewButtonColumn();
+            dgvSerial = new DataGridViewTextBoxColumn();
+            dgvCost = new DataGridViewTextBoxColumn();
+            dgvAcquisitionDate = new DataGridViewTextBoxColumn();
+            dgvLastMaintenance = new DataGridViewTextBoxColumn();
+            dgvStatus = new DataGridViewTextBoxColumn();
+            dgvRoom = new DataGridViewTextBoxColumn();
+            */
+            dgvBtnView = new DataGridViewButtonColumn();
+            dgvBtnEdit = new DataGridViewButtonColumn();
+            dgvBtnDelete = new DataGridViewButtonColumn();
+            btnAddEquipment = new Button();
+            btnReturnHome = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEquipment).BeginInit();
             SuspendLayout();
             // 
             // dgvEquipment
             // 
+            
             dgvEquipment.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEquipment.Columns.AddRange(new DataGridViewColumn[] { dgvEquipmentID, dgvBrand, dgvModel, dgvSerialNumber, dgvLastMaintenanceDate, dgvView, dgvEdit, dgvDelete });
+            dgvEquipment.Columns.AddRange(new DataGridViewColumn[] {dgvBtnView, dgvBtnEdit, dgvBtnDelete });
             dgvEquipment.Location = new Point(12, 12);
             dgvEquipment.Name = "dgvEquipment";
-            dgvEquipment.Size = new Size(843, 388);
+            dgvEquipment.RowHeadersWidth = 62;
+            dgvEquipment.Size = new Size(1143, 550);
             dgvEquipment.TabIndex = 0;
+            dgvEquipment.CellClick += dgvEquipment_CellClick;
+            
+            //dgvEquipment.CellContentClick += this.dgvEquipment_CellContentClick;
             // 
-            // btnReturnHome
+            // EquipmentID
             // 
-            btnReturnHome.Location = new Point(12, 411);
-            btnReturnHome.Name = "btnReturnHome";
-            btnReturnHome.Size = new Size(160, 27);
-            btnReturnHome.TabIndex = 7;
-            btnReturnHome.Text = "Return to Home";
-            btnReturnHome.UseVisualStyleBackColor = true;
+            /*
+            EquipmentID.HeaderText = "EquipmentID";
+            EquipmentID.MinimumWidth = 8;
+            EquipmentID.Name = "EquipmentID";
+            EquipmentID.Visible = false;
+            EquipmentID.Width = 150;
             // 
-            // btnAddNewEquipment
+            // dgvType
             // 
-            btnAddNewEquipment.Location = new Point(697, 411);
-            btnAddNewEquipment.Name = "btnAddNewEquipment";
-            btnAddNewEquipment.Size = new Size(160, 27);
-            btnAddNewEquipment.TabIndex = 6;
-            btnAddNewEquipment.Text = "Add New Equipment";
-            btnAddNewEquipment.UseVisualStyleBackColor = true;
-            // 
-            // dgvEquipmentID
-            // 
-            dgvEquipmentID.DataPropertyName = "EquipmentID";
-            dgvEquipmentID.HeaderText = "EquipmentID";
-            dgvEquipmentID.Name = "dgvEquipmentID";
-            dgvEquipmentID.ReadOnly = true;
+            dgvType.HeaderText = "Type";
+            dgvType.MinimumWidth = 8;
+            dgvType.Name = "dgvType";
+            dgvType.Width = 150;
             // 
             // dgvBrand
             // 
-            dgvBrand.DataPropertyName = "Brand";
             dgvBrand.HeaderText = "Brand";
+            dgvBrand.MinimumWidth = 8;
             dgvBrand.Name = "dgvBrand";
-            dgvBrand.ReadOnly = true;
-            dgvBrand.Width = 125;
+            dgvBrand.Width = 150;
             // 
             // dgvModel
             // 
-            dgvModel.DataPropertyName = "Model";
             dgvModel.HeaderText = "Model";
+            dgvModel.MinimumWidth = 8;
             dgvModel.Name = "dgvModel";
-            dgvModel.ReadOnly = true;
-            dgvModel.Width = 125;
+            dgvModel.Width = 150;
             // 
-            // dgvSerialNumber
+            // dgvSerial
             // 
-            dgvSerialNumber.DataPropertyName = "SerialNumber";
-            dgvSerialNumber.HeaderText = "Serial Number";
-            dgvSerialNumber.Name = "dgvSerialNumber";
-            dgvSerialNumber.ReadOnly = true;
+            dgvSerial.HeaderText = "Serial #";
+            dgvSerial.MinimumWidth = 8;
+            dgvSerial.Name = "dgvSerial";
+            dgvSerial.Width = 150;
             // 
-            // dgvLastMaintenanceDate
+            // dgvCost
             // 
-            dgvLastMaintenanceDate.DataPropertyName = "LastMaintenanceDate";
-            dgvLastMaintenanceDate.HeaderText = "Last Maintenance";
-            dgvLastMaintenanceDate.Name = "dgvLastMaintenanceDate";
-            dgvLastMaintenanceDate.ReadOnly = true;
-            dgvLastMaintenanceDate.Width = 125;
+            dgvCost.HeaderText = "Cost";
+            dgvCost.MinimumWidth = 8;
+            dgvCost.Name = "dgvCost";
+            dgvCost.Width = 150;
             // 
-            // dgvView
+            // dgvAcquisitionDate
             // 
-            dgvView.DataPropertyName = "View";
-            dgvView.HeaderText = "";
-            dgvView.Name = "dgvView";
-            dgvView.UseColumnTextForButtonValue = true;
-            dgvView.Width = 75;
+            dgvAcquisitionDate.HeaderText = "Acquired";
+            dgvAcquisitionDate.MinimumWidth = 8;
+            dgvAcquisitionDate.Name = "dgvAcquisitionDate";
+            dgvAcquisitionDate.Width = 150;
             // 
-            // dgvEdit
+            // dgvLastMaintenance
             // 
-            dgvEdit.DataPropertyName = "Edit";
-            dgvEdit.HeaderText = "";
-            dgvEdit.Name = "dgvEdit";
-            dgvEdit.UseColumnTextForButtonValue = true;
-            dgvEdit.Width = 75;
+            dgvLastMaintenance.HeaderText = "Last Maintenance";
+            dgvLastMaintenance.MinimumWidth = 8;
+            dgvLastMaintenance.Name = "dgvLastMaintenance";
+            dgvLastMaintenance.Width = 150;
             // 
-            // dgvDelete
+            // dgvStatus
             // 
-            dgvDelete.DataPropertyName = "Delete";
-            dgvDelete.HeaderText = "";
-            dgvDelete.Name = "dgvDelete";
-            dgvDelete.UseColumnTextForButtonValue = true;
-            dgvDelete.Width = 75;
+            dgvStatus.HeaderText = "Status";
+            dgvStatus.MinimumWidth = 8;
+            dgvStatus.Name = "dgvStatus";
+            dgvStatus.Width = 150;
+            // 
+            // dgvRoom
+            // 
+            dgvRoom.HeaderText = "Location";
+            dgvRoom.MinimumWidth = 8;
+            dgvRoom.Name = "dgvRoom";
+            dgvRoom.Width = 150;
+            */
+            // 
+            // dgvBtnView
+            // 
+            dgvBtnView.HeaderText = "";
+            dgvBtnView.MinimumWidth = 8;
+            dgvBtnView.Name = "dgvBtnView";
+            dgvBtnView.Text = "View";
+            dgvBtnView.UseColumnTextForButtonValue = true;
+            dgvBtnView.Width = 150;
+            // 
+            // dgvBtnEdit
+            // 
+            dgvBtnEdit.HeaderText = "";
+            dgvBtnEdit.MinimumWidth = 8;
+            dgvBtnEdit.Name = "dgvBtnEdit";
+            dgvBtnEdit.Text = "Edit";
+            dgvBtnEdit.UseColumnTextForButtonValue = true;
+            dgvBtnEdit.Width = 150;
+            // 
+            // dgvBtnDelete
+            // 
+            dgvBtnDelete.HeaderText = "";
+            dgvBtnDelete.MinimumWidth = 8;
+            dgvBtnDelete.Name = "dgvBtnDelete";
+            dgvBtnDelete.Text = "Delete";
+            dgvBtnDelete.UseColumnTextForButtonValue = true;
+            dgvBtnDelete.Width = 150;
+            // 
+            // btnAddEquipment
+            // 
+            btnAddEquipment.Location = new Point(1034, 571);
+            btnAddEquipment.Name = "btnAddEquipment";
+            btnAddEquipment.Size = new Size(75, 34);
+            btnAddEquipment.TabIndex = 1;
+            btnAddEquipment.Text = "Add Equipment";
+            btnAddEquipment.Click += btnAddEquipment_Click;
+            // 
+            // btnReturnHome
+            // 
+            btnReturnHome.Location = new Point(12, 568);
+            btnReturnHome.Name = "btnReturnHome";
+            btnReturnHome.Size = new Size(75, 34);
+            btnReturnHome.TabIndex = 2;
+            btnReturnHome.Text = "Return Home";
+            btnReturnHome.Click += btnReturnHome_Click;
             // 
             // frmEquipmentCRUD
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(869, 450);
-            Controls.Add(btnReturnHome);
-            Controls.Add(btnAddNewEquipment);
+            ClientSize = new Size(1171, 617);
             Controls.Add(dgvEquipment);
+            Controls.Add(btnAddEquipment);
+            Controls.Add(btnReturnHome);
             Name = "frmEquipmentCRUD";
-            Text = "frmEquipmentCRUD";
+            Text = "Equipment Management";
             ((System.ComponentModel.ISupportInitialize)dgvEquipment).EndInit();
             ResumeLayout(false);
         }
-
-        #endregion
-
-        private DataGridView dgvEquipment;
-        private Button btnReturnHome;
-        private Button btnAddNewEquipment;
-        private DataGridViewTextBoxColumn dgvEquipmentID;
-        private DataGridViewTextBoxColumn dgvBrand;
-        private DataGridViewTextBoxColumn dgvModel;
-        private DataGridViewTextBoxColumn dgvSerialNumber;
-        private DataGridViewTextBoxColumn dgvLastMaintenanceDate;
-        private DataGridViewButtonColumn dgvView;
-        private DataGridViewButtonColumn dgvEdit;
-        private DataGridViewButtonColumn dgvDelete;
     }
 }
