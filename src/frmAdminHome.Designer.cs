@@ -86,6 +86,7 @@
             // 
             // btnMedRecords
             // 
+            btnMedRecords.Enabled = false;
             btnMedRecords.Font = new Font("Verdana", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnMedRecords.Location = new Point(98, 294);
             btnMedRecords.Name = "btnMedRecords";
