@@ -111,8 +111,8 @@ namespace WUMedCoProject.src
             // dgvEmployeeID
             // 
             dgvEmployeeID.DataPropertyName = "EmployeeID";
-            dgvEmployeeID.HeaderText = "Employee ID";
-            dgvEmployeeID.Name = "dgvEmployeeID";
+            dgvEmployeeID.HeaderText = "EmployeeID";
+            dgvEmployeeID.Name = "EmployeeID";
             dgvEmployeeID.Width = 80;
             // 
             // dgvFirstName
