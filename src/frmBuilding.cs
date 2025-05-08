@@ -18,7 +18,8 @@ namespace WUMedCoProject.src
         private readonly int? _buildingId;
         private readonly FormMode _mode;
         private bool _hasUnsavedChanges = false;
-        private int _addressId;
+        private int _addressId = -1;
+        private int _selectedDirectorID = -1;
 
         public frmBuilding(FormMode mode, int? buildingId = null)
         {
@@ -35,6 +36,9 @@ namespace WUMedCoProject.src
             LoadBuildingData();
 
             WireUpChangeEvents(this);
+
+            dgvEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEmployees.MultiSelect = false;
         }
 
         /**********************************************************************
@@ -122,7 +126,7 @@ namespace WUMedCoProject.src
                         if (reader.Read())
                         {
                             // For Debugging
-                            MessageBox.Show("Reader is indeed reading");
+                            //MessageBox.Show("Reader is indeed reading");
 
                             // Populate Building fields
                             txtName.Text = reader["Name"].ToString();
@@ -130,6 +134,7 @@ namespace WUMedCoProject.src
                             txtAssignedFunction.Text = reader["AssignedFunction"].ToString();
 
                             // Populate Address fields
+                            _addressId = Convert.ToInt32(reader["AddressID"]);
                             txtStreet.Text = reader["StreetAddress"].ToString();
                             txtApt.Text = reader["ApartmentSuiteNum"] == DBNull.Value ? string.Empty : reader["ApartmentSuiteNum"].ToString();
                             txtCity.Text = reader["City"].ToString();
@@ -138,6 +143,11 @@ namespace WUMedCoProject.src
                             txtZip.Text = reader["ZipCode"].ToString();
 
                             //TODO: Populate Employees DataGridView
+                            if (reader["DirectorID"] != DBNull.Value)
+                            {
+                                _selectedDirectorID = Convert.ToInt32(reader["DirectorID"]);
+                                SelectDirectorRow(_selectedDirectorID);
+                            }
 
                         }
                     }
@@ -159,7 +169,26 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void PopulateEmployeesDataGridView()
         {
-            //TODO: Implement the logic to populate the dgvEmployees
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+            {
+                var query = @"SELECT EmployeeID, FirstName, LastName 
+                      FROM Employee 
+                      ORDER BY LastName, FirstName";
+
+                var adapter = new SqlDataAdapter(query, conn);
+                var dt = new DataTable();
+
+                try
+                {
+                    adapter.Fill(dt);
+                    dgvEmployees.DataSource = dt;
+                    dgvEmployees.ClearSelection();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Error loading employees: {ex.Message}", "Database Error");
+                }
+            }
         }
 
         /**********************************************************************
@@ -288,7 +317,59 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void CreateNewBuilding()
         {
-            //TODO: Implement the logic to create a new building
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    // 1. Create new address
+                    int addressId = CreateAddress(conn, transaction);
+
+                    // 2. Get director (if selected)
+                    int? directorId = dgvEmployees.SelectedRows.Count > 0
+                        ? Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells["dgvEmployeeID"].Value)
+                        : (int?)null;
+
+                    // 3. Create building record
+                    var query = @"INSERT INTO Building (
+                            Name, DateOpened, AssignedFunction, 
+                            AddressID, DirectorID
+                          ) VALUES (
+                            @Name, @DateOpened, @AssignedFunction,
+                            @AddressID, @DirectorID
+                          )";
+
+                    using (var cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", txtName.Text.Trim());
+                        cmd.Parameters.AddWithValue("@DateOpened", dtpDateOpened.Value.Date);
+                        cmd.Parameters.AddWithValue("@AssignedFunction", txtAssignedFunction.Text.Trim());
+                        cmd.Parameters.AddWithValue("@AddressID", addressId);
+                        cmd.Parameters.AddWithValue("@DirectorID", directorId ?? (object)DBNull.Value);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    MessageBox.Show("Building created successfully!", "Success");
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error creating building: {ex.Message}", "Database Error");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error: {ex.Message}", "Error");
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         /**********************************************************************
@@ -296,7 +377,60 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void UpdateExistingBuilding()
         {
-            //TODO: Implement the logic to update the existing building given the building ID
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+            {
+                conn.Open();
+                SqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    // 1. Update existing address
+                    UpdateAddress(conn, transaction);
+
+                    // 2. Get director (if selected)
+                    int? directorId = dgvEmployees.SelectedRows.Count > 0
+                        ? Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells["dgvEmployeeID"].Value)
+                        : (int?)null;
+
+                    // 3. Update building record
+                    var query = @"UPDATE Building SET
+                            Name = @Name,
+                            DateOpened = @DateOpened,
+                            AssignedFunction = @AssignedFunction,
+                            DirectorID = @DirectorID
+                          WHERE BuildingID = @BuildingID";
+
+                    using (var cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", txtName.Text.Trim());
+                        cmd.Parameters.AddWithValue("@DateOpened", dtpDateOpened.Value.Date);
+                        cmd.Parameters.AddWithValue("@AssignedFunction", txtAssignedFunction.Text.Trim());
+                        cmd.Parameters.AddWithValue("@DirectorID", directorId ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@BuildingID", _buildingId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                            throw new Exception("No building record was updated");
+                    }
+
+                    transaction.Commit();
+                    MessageBox.Show("Building updated successfully!", "Success");
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error updating building: {ex.Message}", "Database Error");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error: {ex.Message}", "Error");
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         /**********************************************************************
@@ -321,7 +455,8 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void btnClearSelection_Click(object sender, EventArgs e)
         {
-            //TODO: Implement the logic to clear the selection from the dgvEmployees
+            dgvEmployees.ClearSelection();
+            _selectedDirectorID = -1;
         }
 
         /**********************************************************************
@@ -329,7 +464,10 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //TODO: Implement the logic to search for buildings based on the search criteria
+            if (!string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                LoadFilteredEmployees(txtSearch.Text.Trim());
+            }
         }
 
         /**********************************************************************
@@ -337,7 +475,51 @@ namespace WUMedCoProject.src
          *********************************************************************/
         private void btnClearSearch_Click(object sender, EventArgs e)
         {
-            //TODO: Implement the logic to clear the search criteria and refresh the dgvBuildings
+            txtSearch.Clear();
+            PopulateEmployeesDataGridView();
+        }
+
+        /**********************************************************************
+         * Method to load filtered employee data
+         *********************************************************************/
+        private void LoadFilteredEmployees(string searchTerm)
+        {
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WUMedCo"].ConnectionString))
+            {
+                var query = @"SELECT EmployeeID, FirstName, LastName 
+                      FROM Employee 
+                      WHERE FirstName LIKE @SearchTerm OR LastName LIKE @SearchTerm
+                      ORDER BY LastName, FirstName";
+
+                var adapter = new SqlDataAdapter(query, conn);
+                adapter.SelectCommand.Parameters.AddWithValue("@SearchTerm", $"%{searchTerm}%");
+                var dt = new DataTable();
+
+                try
+                {
+                    adapter.Fill(dt);
+                    dgvEmployees.DataSource = dt;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Error searching employees: {ex.Message}", "Database Error");
+                }
+            }
+        }
+
+        /**********************************************************************
+         * Method to select current director in DGV
+         *********************************************************************/
+        private void SelectDirectorRow(int employeeID)
+        {
+            foreach (DataGridViewRow row in dgvEmployees.Rows)
+            {
+                if (Convert.ToInt32(row.Cells["dgvEmployeeID"].Value) == employeeID)
+                {
+                    row.Selected = true;
+                    break;
+                }
+            }
         }
 
         /**********************************************************************

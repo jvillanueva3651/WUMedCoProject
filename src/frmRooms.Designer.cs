@@ -53,13 +53,13 @@
             // 
             // dgvRooms
             // 
+            dgvRooms.AllowUserToAddRows = false;
             dgvRooms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvRooms.Columns.AddRange(new DataGridViewColumn[] { RoomID, RoomType, Capacity });
             dgvRooms.Location = new Point(12, 27);
             dgvRooms.Name = "dgvRooms";
             dgvRooms.Size = new Size(326, 311);
             dgvRooms.TabIndex = 1;
-            dgvRooms.AllowUserToAddRows = false;
             dgvRooms.CellEndEdit += dgvRooms_CellEndEdit;
             // 
             // RoomID
@@ -93,6 +93,7 @@
             // 
             // btnExit
             // 
+            btnExit.DialogResult = DialogResult.OK;
             btnExit.Location = new Point(248, 3);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(75, 23);

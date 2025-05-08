@@ -90,6 +90,7 @@
             // 
             // btnSave
             // 
+            btnSave.DialogResult = DialogResult.OK;
             btnSave.Location = new Point(213, 120);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
